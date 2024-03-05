@@ -1,60 +1,34 @@
 package com.librarymanagement.controller;
 
-import com.librarymanagement.model.UsersModel;
+import com.librarymanagement.model.UserLoginDTO;
+import com.librarymanagement.model.UserRegistrationDTO;
 import com.librarymanagement.service.UsersService;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api")
 public class UsersController {
-    @Autowired
-    private UsersService usersService;
+    private final UsersService usersService;
 
+    public UsersController(UsersService usersService){
+        this.usersService = usersService;
+    }
     @PostMapping("/register")
-    public ResponseEntity<UsersModel> registerUser(@RequestBody UsersModel usersModel){
-        UsersModel newUser = usersService.createUser(usersModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDTO userDTO){
+        usersService.registerUser(userDTO);
+        return ResponseEntity.ok("User registered succesfuly");
     }
-
-    @GetMapping("/{userId}")
-    public ResponseEntity<UsersModel> getUserById(@PathVariable Integer userId) {
-        UsersModel usersModel = usersService.getUserById(userId);
-        if (usersModel != null){
-            return ResponseEntity.ok(usersModel);
-        }else {
-            return ResponseEntity.notFound().build();
-        }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginDTO userDto){
+        return ResponseEntity.ok("Login successful");
     }
-
-
-    @GetMapping("")
-    public ResponseEntity<List<UsersModel>> getAllUsers(){
-        List<UsersModel> users = usersService.getAllUsers();
-        return ResponseEntity.ok(users);
-    }
-
-
-    @PutMapping("/{userId}")
-    public ResponseEntity<UsersModel> updateUser(@PathVariable Integer userId, @RequestBody UsersModel usersModel){
-        UsersModel updatedUser = usersService.updateUser(userId, usersModel);
-        if (updatedUser != null){
-            return ResponseEntity.ok(updatedUser);
-        }else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer userId){
-        usersService.deleteUser(userId);
-        return ResponseEntity.noContent().build();
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(){
+        return ResponseEntity.ok("Logout succesful")
     }
 
 }
