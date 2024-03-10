@@ -23,7 +23,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "user/save", "books/all","books").permitAll()
+                        .requestMatchers("/api/","/api/users","/api/books").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

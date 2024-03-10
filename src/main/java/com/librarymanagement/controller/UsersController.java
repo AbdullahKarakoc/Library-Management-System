@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 public class UsersController {
     @Autowired
     private OurUserRepo ourUserRepo;
@@ -27,7 +27,7 @@ public class UsersController {
         return "This is publickly accesible withing needing authentication ";
     }
 
-    @PostMapping("/user/save")
+    @PostMapping("/users")
     public ResponseEntity<Object> saveUSer(@RequestBody OurUser ourUser) {
         ourUser.setPassword(passwordEncoder.encode(ourUser.getPassword()));
         OurUser result = ourUserRepo.save(ourUser);
@@ -36,13 +36,8 @@ public class UsersController {
         }
         return ResponseEntity.status(404).body("Error, User Not Saved");
     }
-
-    @GetMapping("/books/all")
-    public ResponseEntity<Object> getAllProducts() {
-        return ResponseEntity.ok(booksRepository.findAll());
-    }
-
-    @GetMapping("/users/all")
+    
+    @GetMapping("/users")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getAllUsers() {
         return ResponseEntity.ok(ourUserRepo.findAll());

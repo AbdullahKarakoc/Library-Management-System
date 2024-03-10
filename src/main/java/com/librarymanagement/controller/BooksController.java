@@ -3,6 +3,7 @@ package com.librarymanagement.controller;
 import com.librarymanagement.model.BooksModel;
 import com.librarymanagement.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,13 @@ public class BooksController {
     @Autowired
     private BooksService service;
 
-    @PostMapping("/addBook")
+    @PostMapping("/books")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public BooksModel addBook(@RequestBody BooksModel booksModel){
         return service.saveBook(booksModel);
     }
-    @PostMapping("/addBooks")
+    @PostMapping("/booksByList")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<BooksModel> addBooks(@RequestBody List<BooksModel> booksModels){
         return service.saveBooks(booksModels);
     }
@@ -29,22 +32,24 @@ public class BooksController {
     public List<BooksModel> findAllBooks(){
         return service.getBooks();
     }
-    @GetMapping("/bookById/{id}")
+    @GetMapping("/booksById/{id}")
     public BooksModel findBookById(@PathVariable int id){
         return service.getBookById(id);
     }
-    @GetMapping("/book/{name}")
+    @GetMapping("/booksByName/{name}")
     public BooksModel findBookByName(@PathVariable String name){
         return service.getBookByName(name);
     }
 
 
-    @PutMapping("/update")
+    @PutMapping("/books")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public BooksModel updateBook(@RequestBody BooksModel booksModel){
         return service.updateBook(booksModel);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/books/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteBook(@PathVariable int id){
         return service.deleteBook(id);
     }
