@@ -1,6 +1,5 @@
 package com.librarymanagement.controller;
 
-<<<<<<< HEAD
 import com.librarymanagement.model.OurUser;
 import com.librarymanagement.repository.OurUserRepo;
 import com.librarymanagement.repository.BooksRepository;
@@ -24,71 +23,42 @@ public class UsersController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
-    public String goHome(){
+    public String goHome() {
         return "This is publickly accesible withing needing authentication ";
     }
+
     @PostMapping("/user/save")
-    public ResponseEntity<Object> saveUSer(@RequestBody OurUser ourUser){
+    public ResponseEntity<Object> saveUSer(@RequestBody OurUser ourUser) {
         ourUser.setPassword(passwordEncoder.encode(ourUser.getPassword()));
         OurUser result = ourUserRepo.save(ourUser);
-        if (result.getId() > 0){
-            return ResponseEntity.ok("USer Was Saved");
+        if (result.getId() > 0) {
+            return ResponseEntity.ok("User Was Saved");
         }
-        return ResponseEntity.status(404).body("Error, USer Not Saved");
+        return ResponseEntity.status(404).body("Error, User Not Saved");
     }
-    @GetMapping("/product/all")
-    public ResponseEntity<Object> getAllProducts(){
+
+    @GetMapping("/books/all")
+    public ResponseEntity<Object> getAllProducts() {
         return ResponseEntity.ok(booksRepository.findAll());
     }
+
     @GetMapping("/users/all")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> getAllUsers(){
+    public ResponseEntity<Object> getAllUsers() {
         return ResponseEntity.ok(ourUserRepo.findAll());
     }
+
     @GetMapping("/users/single")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    public ResponseEntity<Object> getMyDetails(){
+    public ResponseEntity<Object> getMyDetails() {
         return ResponseEntity.ok(ourUserRepo.findByEmail(getLoggedInUserDetails().getUsername()));
     }
 
-    public UserDetails getLoggedInUserDetails(){
+    public UserDetails getLoggedInUserDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             return (UserDetails) authentication.getPrincipal();
         }
         return null;
     }
-=======
-import com.librarymanagement.model.UserLoginDTO;
-import com.librarymanagement.model.UserRegistrationDTO;
-import com.librarymanagement.service.UsersService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("/api")
-public class UsersController {
-    private final UsersService usersService;
-
-    public UsersController(UsersService usersService){
-        this.usersService = usersService;
-    }
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDTO userDTO){
-        usersService.registerUser(userDTO);
-        return ResponseEntity.ok("User registered succesfuly");
-    }
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO userDto){
-        return ResponseEntity.ok("Login successful");
-    }
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(){
-        return ResponseEntity.ok("Logout succesful")
-    }
-
->>>>>>> dev
 }
