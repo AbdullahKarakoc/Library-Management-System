@@ -27,6 +27,7 @@ public class BooksModel {
     @JoinColumn(name = "authors_id")
     private AuthorsModel authors;
 
+    
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "publishers_id")
