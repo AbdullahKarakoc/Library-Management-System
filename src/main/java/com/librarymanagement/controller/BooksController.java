@@ -16,12 +16,8 @@ public class BooksController {
     @Autowired
     private BooksService service;
 
+
     @PostMapping("/books")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public BooksModel addBook(@RequestBody BooksModel booksModel){
-        return service.saveBook(booksModel);
-    }
-    @PostMapping("/booksByList")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<BooksModel> addBooks(@RequestBody List<BooksModel> booksModels){
         return service.saveBooks(booksModels);

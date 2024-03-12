@@ -1,5 +1,7 @@
 package com.librarymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +18,18 @@ public class BooksModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String author;
     private Integer release;
     private String type;
+
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "authors_id")
+    private AuthorsModel authors;
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "publishers_id")
+    private PublishersModel publishers;
 
 }
