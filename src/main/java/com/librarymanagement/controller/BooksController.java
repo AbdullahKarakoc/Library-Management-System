@@ -5,7 +5,6 @@ import com.librarymanagement.model.BooksModel;
 import com.librarymanagement.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
@@ -30,20 +29,21 @@ public class BooksController {
         return service.getBooks();
     }
     @GetMapping("/booksById/{id}")
-    public BooksModel findBookById(@PathVariable int id){
+    public BooksDto findBookById(@PathVariable int id){
         return service.getBookById(id);
     }
     @GetMapping("/booksByName/{name}")
-    public BooksModel findBookByName(@PathVariable String name){
+    public BooksDto findBookByName(@PathVariable String name){
         return service.getBookByName(name);
     }
 
 
-    @PutMapping("/books")
+    @PutMapping("/books/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public BooksModel updateBook(@RequestBody BooksModel booksModel){
-        return service.updateBook(booksModel);
+    public BooksDto updateBook(@PathVariable int id, @RequestBody BooksDto booksDto){
+        return service.updateBook(id, booksDto);
     }
+
 
     @DeleteMapping("/books/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")

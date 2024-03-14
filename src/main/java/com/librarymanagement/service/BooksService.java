@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,12 +29,7 @@ public class BooksService {
     private final PublisherRepository publisherRepository;
 
 
-//    public List<BooksDto> saveBooks(List<BooksDto> booksDtoList) {
-//        return booksDtoList.stream()
-//                .map(this::saveBook)
-//                .collect(Collectors.toList());
-//    }
-//
+
 //    public BooksDto saveBooks(BooksDto booksDto) {
 //        BooksModel booksModelList = modelMapper.map(booksDto, BooksModel.class);
 //        BooksModel savedBooks = repository.saveAndFlush(booksModelList);
@@ -59,22 +55,38 @@ public class BooksService {
         return dtos;
     }
 
-    public BooksModel getBookById(int id) {
-        return repository.findById(id).orElse(null);
+    public BooksDto getBookById(int id) {
+        Optional<BooksModel> booksModel = repository.findById(id);
+        return modelMapper.map(booksModel.get(), BooksDto.class);
     }
 
-    public BooksModel getBookByName(String name) {
-        return repository.findByName(name);
+    public BooksDto getBookByName(String name) {
+        Optional<BooksModel> booksModel = repository.findByName(name);
+        return modelMapper.map(booksModel.get(), BooksDto.class);
     }
 
-    public BooksModel updateBook(BooksModel booksModel) {
-        BooksModel existingBooksModel = repository.findById(booksModel.getId()).orElse(null);
-        assert existingBooksModel != null;
-        existingBooksModel.setName(booksModel.getName());
-        existingBooksModel.setRelease(booksModel.getRelease());
-        existingBooksModel.setType(booksModel.getType());
-        return repository.save(existingBooksModel);
+    public BooksDto updateBook(int id, BooksDto booksDto) {
+        Optional<BooksModel> optionalBooksModel = repository.findById(id);
+        if (optionalBooksModel.isPresent()) {
+            BooksModel existingBook = optionalBooksModel.get();
+            existingBook.setName(booksDto.getName());
+            existingBook.setRelease(booksDto.getRelease());
+            existingBook.setType(booksDto.getType());
+
+            AuthorsModel author = authorRepository.save(modelMapper.map(booksDto.getAuthors(), AuthorsModel.class));
+            existingBook.setAuthors(author);
+
+            PublishersModel publisher = publisherRepository.save(modelMapper.map(booksDto.getPublishers(), PublishersModel.class));
+            existingBook.setPublishers(publisher);
+
+            BooksModel updatedBook = repository.save(existingBook);
+            return modelMapper.map(updatedBook, BooksDto.class);
+        } else {
+            return null;
+        }
     }
+
+
 
     public String deleteBook(int id) {
         repository.deleteById(id);
