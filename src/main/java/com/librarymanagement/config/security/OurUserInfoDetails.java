@@ -1,4 +1,4 @@
-package com.librarymanagement.config;
+package com.librarymanagement.config.security;
 
 import com.librarymanagement.model.OurUser;
 import org.springframework.security.core.GrantedAuthority;

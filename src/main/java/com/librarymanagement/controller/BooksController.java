@@ -1,5 +1,6 @@
 package com.librarymanagement.controller;
 
+import com.librarymanagement.dto.BooksDto;
 import com.librarymanagement.model.BooksModel;
 import com.librarymanagement.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,13 @@ public class BooksController {
 
     @PostMapping("/books")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<BooksModel> addBooks(@RequestBody List<BooksModel> booksModels){
-        return service.saveBooks(booksModels);
+    public BooksDto addBooks(@RequestBody BooksDto booksDto){
+        return service.saveBook(booksDto);
     }
 
 
     @GetMapping("/books")
-    public List<BooksModel> findAllBooks(){
+    public List<BooksDto> findAllBooks(){
         return service.getBooks();
     }
     @GetMapping("/booksById/{id}")

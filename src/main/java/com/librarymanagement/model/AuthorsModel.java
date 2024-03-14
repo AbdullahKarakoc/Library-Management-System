@@ -23,7 +23,7 @@ public class AuthorsModel {
     private String country;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "authors")
+    @OneToMany(mappedBy = "authors",cascade = CascadeType.ALL)
     private List<BooksModel> books;
 
 }

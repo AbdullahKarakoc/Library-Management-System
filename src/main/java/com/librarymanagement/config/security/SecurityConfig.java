@@ -1,4 +1,4 @@
-package com.librarymanagement.config;
+package com.librarymanagement.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/","/api/users","/api/books").permitAll()
+                        .requestMatchers("/api/","/api/users","/api/books","/api/booksById/{id}","/api/booksByName/{name}").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

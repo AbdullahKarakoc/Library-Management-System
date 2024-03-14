@@ -21,6 +21,6 @@ public class PublishersModel    {
     private String name;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "publishers")
+    @OneToMany(mappedBy = "publishers",cascade = CascadeType.ALL)
     private List<BooksModel> books;
 }
