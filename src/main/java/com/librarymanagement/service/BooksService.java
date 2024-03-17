@@ -2,15 +2,19 @@ package com.librarymanagement.service;
 
 
 import com.librarymanagement.dto.BooksDto;
+import com.librarymanagement.exception.DataNotFoundException;
+import com.librarymanagement.exception.InternalServerException;
 import com.librarymanagement.model.AuthorsModel;
 import com.librarymanagement.model.BooksModel;
 import com.librarymanagement.model.PublishersModel;
 import com.librarymanagement.repository.AuthorRepository;
 import com.librarymanagement.repository.BooksRepository;
 import com.librarymanagement.repository.PublisherRepository;
+import com.librarymanagement.util.ErrorMessages;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,18 +60,18 @@ public class BooksService {
     }
 
     public BooksDto getBookById(int id) {
-        Optional<BooksModel> booksModel = repository.findById(id);
+        Optional<BooksModel> booksModel = Optional.ofNullable(repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue())));
         return modelMapper.map(booksModel.get(), BooksDto.class);
     }
 
     public BooksDto getBookByName(String name) {
-        Optional<BooksModel> booksModel = repository.findByName(name);
+        Optional<BooksModel> booksModel = Optional.ofNullable(repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue())));
         return modelMapper.map(booksModel.get(), BooksDto.class);
     }
 
     public BooksDto updateBook(int id, BooksDto booksDto) {
-        Optional<BooksModel> optionalBooksModel = repository.findById(id);
-        if (optionalBooksModel.isPresent()) {
+        Optional<BooksModel> optionalBooksModel = Optional.ofNullable(repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue())));
+
             BooksModel existingBook = optionalBooksModel.get();
             existingBook.setName(booksDto.getName());
             existingBook.setRelease(booksDto.getRelease());
@@ -81,17 +85,19 @@ public class BooksService {
 
             BooksModel updatedBook = repository.save(existingBook);
             return modelMapper.map(updatedBook, BooksDto.class);
-        } else {
-            return null;
+
+        }
+
+        
+    public String deleteBook(int id) {
+        try {
+            repository.deleteById(id);
+            return " !!! Kitap Bilgileri Silindi || silinen id: " + id;
+        } catch (EmptyResultDataAccessException e) {
+            throw new DataNotFoundException("Book not found with id: " + id);
+        } catch (Exception e) {
+            throw new InternalServerException("An error occurred while deleting the book with id: " + id);
         }
     }
-
-
-
-    public String deleteBook(int id) {
-        repository.deleteById(id);
-        return " !!! Kitap Bilgileri Silindi || silinen id: " +id;
-    }
-
 
 }
