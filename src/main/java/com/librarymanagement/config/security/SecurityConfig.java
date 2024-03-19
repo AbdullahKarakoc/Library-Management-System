@@ -2,6 +2,7 @@ package com.librarymanagement.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,7 +24,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/","/api/users","/api/books","/api/booksById/{id}","/api/booksByName/{name}","/swagger-ui/index.html").permitAll()
+                        .requestMatchers("/api/","/api/users","/swagger-ui/index.html").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/books").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/books").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/booksById/{id}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/booksByName/{name}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/books/{id}").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/books/{id}").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/single").hasAnyAuthority("ADMIN", "USER")
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

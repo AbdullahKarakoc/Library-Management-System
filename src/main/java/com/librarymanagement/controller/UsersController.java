@@ -40,13 +40,11 @@ public class UsersController {
     }
     
     @GetMapping("/users")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> getAllUsers() {
         return ResponseEntity.ok(ourUserRepo.findAll());
     }
 
     @GetMapping("/users/single")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<Object> getMyDetails() {
         return ResponseEntity.ok(ourUserRepo.findByEmail(getLoggedInUserDetails().getUsername()));
     }

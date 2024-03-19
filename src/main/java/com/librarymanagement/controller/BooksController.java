@@ -37,7 +37,6 @@ public class BooksController {
     )
 
     @PostMapping("/books")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public BooksDto addBooks(@RequestBody BooksDto booksDto){
         return service.saveBook(booksDto);
     }
@@ -73,14 +72,12 @@ public class BooksController {
 
 
     @PutMapping("/books/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public BooksDto updateBook(@PathVariable int id, @RequestBody BooksDto booksDto){
         return service.updateBook(id, booksDto);
     }
 
 
     @DeleteMapping("/books/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteBook(@PathVariable int id){
         return service.deleteBook(id);
     }
