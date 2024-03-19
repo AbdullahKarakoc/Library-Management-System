@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(PermissionException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ErrorMessage handlePermissionException(DataNotFoundException exception) {
+    public ErrorMessage handlePermissionException(PermissionException exception) {
         ErrorMessage errorMessage = new ErrorMessage(exception.getMessage());
         return errorMessage;
     }

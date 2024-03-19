@@ -1,4 +1,4 @@
-package com.librarymanagement.config.model_mapper;
+package com.librarymanagement.config.modelMapper;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
