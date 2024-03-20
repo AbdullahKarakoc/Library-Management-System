@@ -60,19 +60,19 @@ public class BooksService {
     }
 
     public BooksDto getBookById(int id) {
-        Optional<BooksModel> booksModel = Optional.ofNullable(repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue())));
-        return modelMapper.map(booksModel.get(), BooksDto.class);
+        BooksModel booksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        return modelMapper.map(booksModel, BooksDto.class);
     }
 
     public BooksDto getBookByName(String name) {
-        Optional<BooksModel> booksModel = Optional.ofNullable(repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue())));
-        return modelMapper.map(booksModel.get(), BooksDto.class);
+        BooksModel booksModel = repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        return modelMapper.map(booksModel, BooksDto.class);
     }
 
     public BooksDto updateBook(int id, BooksDto booksDto) {
-        Optional<BooksModel> optionalBooksModel = Optional.ofNullable(repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue())));
+        BooksModel optionalBooksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
 
-            BooksModel existingBook = optionalBooksModel.get();
+            BooksModel existingBook = optionalBooksModel;
             existingBook.setName(booksDto.getName());
             existingBook.setRelease(booksDto.getRelease());
             existingBook.setType(booksDto.getType());
@@ -88,16 +88,13 @@ public class BooksService {
 
         }
 
-        
+
     public String deleteBook(int id) {
-        try {
-            repository.deleteById(id);
-            return " !!! Kitap Bilgileri Silindi || silinen id: " + id;
-        } catch (EmptyResultDataAccessException e) {
-            throw new DataNotFoundException("Book not found with id: " + id);
-        } catch (Exception e) {
-            throw new InternalServerException("An error occurred while deleting the book with id: " + id);
-        }
+
+        repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        repository.deleteById(id);
+        return " !!! Kitap Bilgileri Silindi || silinen id: " + id;
+
     }
 
 }
