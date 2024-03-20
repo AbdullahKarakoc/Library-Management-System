@@ -1,4 +1,4 @@
-package com.librarymanagement.model;
+package com.librarymanagement.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

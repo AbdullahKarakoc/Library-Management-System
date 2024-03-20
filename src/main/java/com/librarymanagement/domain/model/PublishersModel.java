@@ -1,6 +1,7 @@
-package com.librarymanagement.model;
+package com.librarymanagement.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.librarymanagement.domain.model.BooksModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

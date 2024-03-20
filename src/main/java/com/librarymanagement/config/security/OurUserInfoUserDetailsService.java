@@ -1,6 +1,6 @@
 package com.librarymanagement.config.security;
 
-import com.librarymanagement.model.OurUser;
+import com.librarymanagement.domain.model.OurUser;
 import com.librarymanagement.repository.OurUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

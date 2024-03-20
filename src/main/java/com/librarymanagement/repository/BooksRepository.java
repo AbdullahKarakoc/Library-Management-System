@@ -1,6 +1,6 @@
 package com.librarymanagement.repository;
 
-import com.librarymanagement.model.BooksModel;
+import com.librarymanagement.domain.model.BooksModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

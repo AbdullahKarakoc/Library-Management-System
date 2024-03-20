@@ -1,6 +1,6 @@
 package com.librarymanagement.repository;
 
-import com.librarymanagement.model.OurUser;
+import com.librarymanagement.domain.model.OurUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

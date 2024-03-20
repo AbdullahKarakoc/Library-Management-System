@@ -1,12 +1,12 @@
 package com.librarymanagement.service;
 
 
-import com.librarymanagement.dto.BooksDto;
+import com.librarymanagement.domain.request.BooksRequestDto;
+import com.librarymanagement.domain.response.BooksResponseDto;
 import com.librarymanagement.exception.DataNotFoundException;
-import com.librarymanagement.exception.InternalServerException;
-import com.librarymanagement.model.AuthorsModel;
-import com.librarymanagement.model.BooksModel;
-import com.librarymanagement.model.PublishersModel;
+import com.librarymanagement.domain.model.AuthorsModel;
+import com.librarymanagement.domain.model.BooksModel;
+import com.librarymanagement.domain.model.PublishersModel;
 import com.librarymanagement.repository.AuthorRepository;
 import com.librarymanagement.repository.BooksRepository;
 import com.librarymanagement.repository.PublisherRepository;
@@ -14,11 +14,9 @@ import com.librarymanagement.util.ErrorMessages;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,13 +32,13 @@ public class BooksService {
 
 
 
-//    public BooksDto saveBooks(BooksDto booksDto) {
+//    public BooksRequestDto saveBooks(BooksRequestDto booksDto) {
 //        BooksModel booksModelList = modelMapper.map(booksDto, BooksModel.class);
 //        BooksModel savedBooks = repository.saveAndFlush(booksModelList);
-//        return modelMapper.map(savedBooks, BooksDto.class);
+//        return modelMapper.map(savedBooks, BooksRequestDto.class);
 //    }
 
-    public BooksDto saveBook(BooksDto bookDto) {
+    public BooksRequestDto saveBook(BooksRequestDto bookDto) {
         AuthorsModel author = authorRepository.save(modelMapper.map(bookDto.getAuthors(), AuthorsModel.class));
         PublishersModel publisher = publisherRepository.save(modelMapper.map(bookDto.getPublishers(), PublishersModel.class));
 
@@ -49,27 +47,27 @@ public class BooksService {
         book.setPublishers(publisher);
 
         BooksModel savedBook = repository.save(book);
-        return modelMapper.map(savedBook, BooksDto.class);
+        return modelMapper.map(savedBook, BooksRequestDto.class);
     }
 
 
-    public List<BooksDto> getBooks() {
+    public List<BooksResponseDto> getBooks() {
         List<BooksModel> books = repository.findAll();
-        List<BooksDto> dtos = books.stream().map(BooksModel-> modelMapper.map(BooksModel, BooksDto.class)).collect(Collectors.toList());
+        List<BooksResponseDto> dtos = books.stream().map(BooksModel-> modelMapper.map(BooksModel, BooksResponseDto.class)).collect(Collectors.toList());
         return dtos;
     }
 
-    public BooksDto getBookById(int id) {
+    public BooksResponseDto getBookById(int id) {
         BooksModel booksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
-        return modelMapper.map(booksModel, BooksDto.class);
+        return modelMapper.map(booksModel, BooksResponseDto.class);
     }
 
-    public BooksDto getBookByName(String name) {
+    public BooksResponseDto getBookByName(String name) {
         BooksModel booksModel = repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
-        return modelMapper.map(booksModel, BooksDto.class);
+        return modelMapper.map(booksModel, BooksResponseDto.class);
     }
 
-    public BooksDto updateBook(int id, BooksDto booksDto) {
+    public BooksResponseDto updateBook(int id, BooksRequestDto booksDto) {
         BooksModel optionalBooksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
 
             BooksModel existingBook = optionalBooksModel;
@@ -84,7 +82,7 @@ public class BooksService {
             existingBook.setPublishers(publisher);
 
             BooksModel updatedBook = repository.save(existingBook);
-            return modelMapper.map(updatedBook, BooksDto.class);
+            return modelMapper.map(updatedBook, BooksResponseDto.class);
 
         }
 

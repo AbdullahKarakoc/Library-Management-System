@@ -1,9 +1,9 @@
-package com.librarymanagement.dto;
+package com.librarymanagement.domain.request;
 
 import lombok.Data;
 
 @Data
-public class AuthorsDto {
+public class AuthorsRequestDto {
 
     private String name;
     private Integer age;

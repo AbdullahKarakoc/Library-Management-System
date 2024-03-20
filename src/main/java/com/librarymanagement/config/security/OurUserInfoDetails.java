@@ -1,6 +1,6 @@
 package com.librarymanagement.config.security;
 
-import com.librarymanagement.model.OurUser;
+import com.librarymanagement.domain.model.OurUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
