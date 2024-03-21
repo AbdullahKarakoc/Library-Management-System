@@ -41,9 +41,7 @@ public class SwaggerAnnotations {
             public String summary() {
                 return summary;
             }
-
-
-
+            
             @Override
             public String operationId() {
                 return "";
