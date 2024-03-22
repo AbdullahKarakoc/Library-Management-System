@@ -5,12 +5,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "books")
+@SQLDelete(sql = "UPDATE books SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class BooksModel {
 
     @Id
@@ -19,6 +23,8 @@ public class BooksModel {
     private String name;
     private Integer release;
     private String type;
+    private boolean deleted = Boolean.FALSE;
+
 
 
     @JsonManagedReference

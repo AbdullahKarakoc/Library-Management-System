@@ -24,7 +24,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/","/api/users","/swagger-ui/index.html").permitAll()
+                        .requestMatchers("/api/","/swagger-ui/index.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/books").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/books").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers(HttpMethod.GET, "/api/booksById/{id}").hasAnyAuthority("ADMIN", "USER")
