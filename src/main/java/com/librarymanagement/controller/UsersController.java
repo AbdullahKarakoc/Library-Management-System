@@ -35,8 +35,8 @@ public class UsersController {
             description = "An endpoint to go to the general homepage without requiring authentication."
     )
     @GetMapping("/")
-    public String goHome() {
-        return "This is publickly accesible withing needing authentication ";
+    public ResponseEntity<String> goHome() {
+        return ResponseEntity.ok("This is publicly accessible without needing authentication");
     }
 
 

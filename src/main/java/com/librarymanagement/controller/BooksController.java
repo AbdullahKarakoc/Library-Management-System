@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +32,9 @@ public class BooksController {
             }
     )
     @PostMapping("/books")
-    public BooksRequestDto addBooks(@Valid @RequestBody BooksRequestDto booksDto){
-        return service.saveBook(booksDto);
+    public ResponseEntity<BooksRequestDto> addBooks(@Valid @RequestBody BooksRequestDto booksDto){
+        BooksRequestDto savedBook = service.saveBook(booksDto);
+        return ResponseEntity.ok(savedBook);
     }
 
 
@@ -45,8 +47,9 @@ public class BooksController {
             }
     )
     @GetMapping("/books")
-    public List<BooksResponseDto> findAllBooks(){
-        return service.getBooks();
+    public ResponseEntity<List<BooksResponseDto>> findAllBooks(){
+        List<BooksResponseDto> allBooks = service.getBooks();
+        return ResponseEntity.ok(allBooks);
     }
 
     @Operation(
@@ -58,8 +61,9 @@ public class BooksController {
             }
     )
     @GetMapping("/booksById/{id}")
-    public BooksResponseDto findBookById(@PathVariable int id){
-        return service.getBookById(id);
+    public ResponseEntity<BooksResponseDto> findBookById(@PathVariable int id){
+        BooksResponseDto book = service.getBookById(id);
+        return ResponseEntity.ok(book);
     }
 
 
@@ -72,8 +76,9 @@ public class BooksController {
             }
     )
     @GetMapping("/booksByName/{name}")
-    public BooksResponseDto findBookByName(@PathVariable String name){
-        return service.getBookByName(name);
+    public ResponseEntity<BooksResponseDto> findBookByName(@PathVariable String name){
+        BooksResponseDto book = service.getBookByName(name);
+        return ResponseEntity.ok(book);
     }
 
 
@@ -86,8 +91,9 @@ public class BooksController {
             }
     )
     @PutMapping("/books/{id}")
-    public BooksResponseDto updateBook(@PathVariable int id, @RequestBody BooksRequestDto booksDto){
-        return service.updateBook(id, booksDto);
+    public ResponseEntity<BooksResponseDto> updateBook(@PathVariable int id, @RequestBody BooksRequestDto booksDto){
+        BooksResponseDto updatedBook = service.updateBook(id, booksDto);
+        return ResponseEntity.ok(updatedBook);
     }
 
 
@@ -100,10 +106,10 @@ public class BooksController {
             }
     )
     @DeleteMapping("/books/{id}")
-    public String deleteBook(@PathVariable int id){
-        return service.deleteBook(id);
+    public ResponseEntity<String> deleteBook(@PathVariable int id){
+        String result = service.deleteBook(id);
+        return ResponseEntity.ok(result);
     }
-
 
 
 }
