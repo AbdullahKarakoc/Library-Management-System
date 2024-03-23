@@ -45,6 +45,7 @@ public class BooksService {
         BooksModel book = modelMapper.map(bookDto, BooksModel.class);
         book.setAuthors(author);
         book.setPublishers(publisher);
+        book.setStatus("active");
 
         BooksModel savedBook = repository.save(book);
         return modelMapper.map(savedBook, BooksRequestDto.class);
@@ -59,11 +60,15 @@ public class BooksService {
 
     public BooksResponseDto getBookById(int id) {
         BooksModel booksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        booksModel.setStatus("purchased");
+        repository.save(booksModel);
         return modelMapper.map(booksModel, BooksResponseDto.class);
     }
 
     public BooksResponseDto getBookByName(String name) {
         BooksModel booksModel = repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        booksModel.setStatus("purchased");
+        repository.save(booksModel);
         return modelMapper.map(booksModel, BooksResponseDto.class);
     }
 
@@ -89,7 +94,9 @@ public class BooksService {
 
     public String deleteBook(int id) {
 
-        repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        BooksModel book = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        book.setStatus("deleted");
+        repository.save(book);
         repository.deleteById(id);
         return " !!! Kitap Bilgileri Silindi || silinen id: " + id;
 

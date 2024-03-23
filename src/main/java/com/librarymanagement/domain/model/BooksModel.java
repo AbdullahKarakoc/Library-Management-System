@@ -24,6 +24,8 @@ public class BooksModel {
     private Integer release;
     private String type;
     private boolean deleted = Boolean.FALSE;
+    private String status;
+
 
 
 
