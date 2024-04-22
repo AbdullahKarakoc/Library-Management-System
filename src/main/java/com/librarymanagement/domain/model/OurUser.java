@@ -24,5 +24,6 @@ public class OurUser {
     private String password;
 
     @NotBlank(message = "role is required")
+    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ]+$",message = "User roles not valid") // sadece harf olabilir, sayı ve özel karakter olamaz
     private String roles;
 }

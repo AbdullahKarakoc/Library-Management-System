@@ -11,15 +11,15 @@
 
 
 >**Book:** </br>
-name: (min:1, max:50) is required</br> 
-release: (max:2024) is required</br> 
-type: (min:5, max:20) is required</br></br>
+name: (min:1, max:50) is required/only characters</br> 
+release: (min:1, max:2024) is required/only number</br> 
+type: (min:5, max:20) is required/only characters</br></br>
 >**Author:** </br> 
-name: (min:10, max:40) is required</br> 
-age: (min:3, max:150) is required</br>
-country: (min:2, max:40) is required</br></br>
+name: (min:10, max:40) is required/only characters</br> 
+age: (min:3, max:150) is required/only number</br>
+country: (min:2, max:40) is required/only characters</br></br>
 >**Publisher:** </br>
-name: (min:2, max:30) is required
+name: (min:2, max:30) is required/only characters
 
 >**User:** </br> 
 email: Must be email type</br>
@@ -94,7 +94,32 @@ roles: is required
 | POST        | /api/users              | Yeni kullanıcı oluşturur              | ADMIN & USER       |
 
 </br></br></br>
-### 5. ERD
+
+### 5. TEST
+## Book
+>{
+"name": "Suç ve Ceza",
+"release": 1879,
+"type": "Macera",
+"authors": {
+"name": "da Vinci",
+"age": 80,
+"country": "Italya"
+},
+"publishers": {
+"name": "Sınav yayınevi"
+}
+}
+
+## User
+>{
+"email": "davinci1453@gmail.com",
+"password": "DaVinci1453*",
+"roles": "USER"
+}
+
+
+### 6. ERD
 ![Erd resmi](https://github.com/AbdullahKarakoc/Library-Management-System/blob/main/images/ERD.png)
 
 </br></br></br>
