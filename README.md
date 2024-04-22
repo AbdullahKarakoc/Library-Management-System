@@ -69,5 +69,6 @@
 | POST        | /api/users              | Yeni kullanıcı oluşturur              | ADMIN & USER       |
 
 
-
+### 5. ERD
+![Erd resmi](https://github.com/AbdullahKarakoc/Library-Management-System/blob/main/images/ERD.png)
 
