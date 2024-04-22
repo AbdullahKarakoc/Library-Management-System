@@ -9,10 +9,31 @@
 * Kullanıcılar ve Adminler İd ve isime göre kitap arama yapabilir.
 * Adminler kitap ekleyebilir silebilir ve güncelleyebilirler.
 
+
+>**Book:** </br>
+name: (min:1, max:50) is required</br> 
+release: (max:2024) is required</br> 
+type: (min:5, max:20) is required</br></br>
+>**Author:** </br> 
+name: (min:10, max:40) is required</br> 
+age: (min:3, max:150) is required</br>
+country: (min:2, max:40) is required</br></br>
+>**Publisher:** </br>
+name: (min:2, max:30) is required
+
+>**User:** </br> 
+email: Must be email type</br>
+password: 1 büyük, 1 küçük, 1 özel karakter ve 8-20 arası boyut </br> 
+roles: is required
+
+
+
+
+  </br></br></br>
 ## 2. YAPI
 ### 2.1 Mimari
 > **REST** mimarisi uygulandı
-* REST, client-server arasındaki haberleşmeyi sağlayan HTTP protokolü üzerinden çalışan bir mimaridir. REST ,servis yönelimli mimari üzerine oluşturulan yazılımlarda kullanılan bir transfer yöntemidir.İstemci ve sunucu arasında XML ve JSON verilerini taşıyarak uygulamanın haberleşmesini sağlar.REST mimarisini kullanan servislere ise RESTful servis denir.
+* REST, client-server arasındaki haberleşmeyi sağlayan HTTP protokolü üzerinden çalışan bir mimaridir. REST ,servis yönelimli mimari üzerine oluşturulan yazılımlarda kullanılan bir transfer yöntemidir.İstemci ve sunucu arasında XML ve JSON verilerini taşıyarak uygulamanın haberleşmesini sağlar.REST mimarisini kullanan servislere ise RESTful servis denir.</br>
 
 ### 2.2 Prensip
 > **SOLID** prensiplerine sadık kalınmaya çalışıldı.
@@ -33,11 +54,14 @@
 5. (D)ependency Inversion Principle (DIP: Bağımlılık Ters Çevirme Prensibi )
 ```
 
+</br></br></br>
+
 ## 3. TEKNOLOJİLER
-### 3.1 Ortam
-* Java
-* Spring Boot
+### 3.1 Ortam ve Araçlar
+* Java 21
+* Spring Boot 3.2.5
 * Maven
+  </br>
 ### 3.2 Kütüphane ve Bağımlılıklar
 * Spring Boot Data Jpa
 * Spring Boot Security
@@ -45,12 +69,13 @@
 * Model Mapper
 * SpringDoc OpenApi (Swagger 3)
 * Spring Boot Validation
-
+* Http Authentication and Authorization
+  </br>
 ### 3.3 Veri Tabanı
 * PostgreSql
+  </br></br></br>
 
 ### 4. ENDPOİNT
-
 ## Book
 | HTTP Method | Endpoint                | Açıklama                              | Yetki                |
 | ----------- | ----------------------- | ------------------------------------- | -------------------- |
@@ -68,7 +93,11 @@
 | GET         | /api/users/single       | İstek atan kullancı bilgisini çeker   | ADMIN & USER       |
 | POST        | /api/users              | Yeni kullanıcı oluşturur              | ADMIN & USER       |
 
-
+</br></br></br>
 ### 5. ERD
 ![Erd resmi](https://github.com/AbdullahKarakoc/Library-Management-System/blob/main/images/ERD.png)
+
+</br></br></br>
+
+
 
