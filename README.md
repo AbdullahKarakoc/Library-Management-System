@@ -5,7 +5,9 @@
 * Kullanıcıların sisteme kayıt olup kütüphane veritabanından varolan kitapları çekebilen Restful Api.
 
 ### 1.2 Özet
+* Kitaplara erişmek için USER hesabı oluşturulmalı.
 * Kullanıcılar sadece kitap okuma işlemi yapabilir.
+* Kitap eklemek silmek ve düzenlemek için ADMIN hesabı oluşturulmalı.
 * Kullanıcılar ve Adminler İd ve isime göre kitap arama yapabilir.
 * Adminler kitap ekleyebilir silebilir ve güncelleyebilirler.
 
@@ -69,7 +71,7 @@ roles: is required
 * Model Mapper
 * SpringDoc OpenApi (Swagger 3)
 * Spring Boot Validation
-* Http Authentication and Authorization
+* Http Authentication and Authorization (Basic Auth)
   </br>
 ### 3.3 Veri Tabanı
 * PostgreSql
