@@ -18,7 +18,7 @@ public class BooksRequestDto {
     //@Digits(integer = 4, fraction = 0, message = "Release must contain only numbers")
     @Min(value = 1, message = "Book's release must be at least 1")
     @Max(value = 2024, message = "Book's release cannot be greater than 2024")
-    @IntegerValue
+    @IntegerValue(message = "Release must be an integer value")
     private Integer release;
 
     @NotBlank(message = "book type is required")
