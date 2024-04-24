@@ -29,10 +29,12 @@ public class BooksRequestDto {
     @Temporal(TemporalType.DATE)
     private Date release;
 
-    @NotBlank(message = "book type is required")
+   /* @NotBlank(message = "book type is required")
     @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Book type must be only character") // sadece harf olabilir, sayı ve özel karakter olamaz
     @Size(min = 5, max = 20, message = "Book's type length must be between 5 and 20 characters")
+    */
     private Category category;
+
 
     @Valid
     private  AuthorsRequestDto authors;

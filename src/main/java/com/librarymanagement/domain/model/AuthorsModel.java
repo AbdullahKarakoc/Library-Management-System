@@ -21,7 +21,6 @@ public class AuthorsModel {
     private int id;
     private String name;
     private String surname;
-    @Temporal(TemporalType.DATE)
     private Date birthdate;
 
     @JsonBackReference
