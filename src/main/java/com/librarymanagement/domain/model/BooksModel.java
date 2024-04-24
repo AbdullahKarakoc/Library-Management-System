@@ -1,8 +1,8 @@
 package com.librarymanagement.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.librarymanagement.domain.enums.Category;
-import com.librarymanagement.domain.enums.Status;
+import com.librarymanagement.enums.Category;
+import com.librarymanagement.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

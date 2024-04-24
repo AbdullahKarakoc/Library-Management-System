@@ -1,4 +1,4 @@
-package com.librarymanagement.domain.enums;
+package com.librarymanagement.enums;
 
 public enum Status {
     KIRALANDI,
