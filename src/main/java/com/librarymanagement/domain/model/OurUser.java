@@ -20,7 +20,7 @@ public class OurUser {
     @Email(message = "Mail is not valid")
     private String email;
 
-    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",message = "Password is not valid") // 1 büyük, 1 küçük, 1 özel karakter ve 8-20 arası boyut
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$",message = "Password is not valid") // 1 büyük, 1 küçük, 1 özel karakter ve 8-20 arası boyut
     private String password;
 
     @NotBlank(message = "role is required")

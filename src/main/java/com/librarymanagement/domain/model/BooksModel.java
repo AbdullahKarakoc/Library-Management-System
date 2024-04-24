@@ -1,12 +1,16 @@
 package com.librarymanagement.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.librarymanagement.domain.enums.Category;
+import com.librarymanagement.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -21,11 +25,10 @@ public class BooksModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private Integer release;
-    private String type;
+    private Date release;
+    private Category category;
     private boolean deleted = Boolean.FALSE;
-    private String status;
-
+    private Status status;
 
 
 

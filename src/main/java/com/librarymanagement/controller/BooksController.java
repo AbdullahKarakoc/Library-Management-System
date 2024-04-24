@@ -76,10 +76,19 @@ public class BooksController {
             }
     )
     @GetMapping("/booksByName/{name}")
+    //TODO set işlemi yoktur.
     public ResponseEntity<BooksResponseDto> findBookByName(@PathVariable String name){
         BooksResponseDto book = service.getBookByName(name);
         return ResponseEntity.ok(book);
     }
+
+/*
+    @PutMapping("/books/trade")
+    public void updateBook(@RequestBody BooksRequestDto book){
+        //TODO -> kitap kiralama, satma, kiralanmış kitabı geri getirme
+    }
+
+ */
 
 
     @Operation(

@@ -32,11 +32,6 @@ public class BooksService {
 
 
 
-//    public BooksRequestDto saveBooks(BooksRequestDto booksDto) {
-//        BooksModel booksModelList = modelMapper.map(booksDto, BooksModel.class);
-//        BooksModel savedBooks = repository.saveAndFlush(booksModelList);
-//        return modelMapper.map(savedBooks, BooksRequestDto.class);
-//    }
 
     public BooksRequestDto saveBook(BooksRequestDto bookDto) {
         AuthorsModel author = authorRepository.save(modelMapper.map(bookDto.getAuthors(), AuthorsModel.class));
@@ -45,7 +40,6 @@ public class BooksService {
         BooksModel book = modelMapper.map(bookDto, BooksModel.class);
         book.setAuthors(author);
         book.setPublishers(publisher);
-        book.setStatus("active");
 
         BooksModel savedBook = repository.save(book);
         return modelMapper.map(savedBook, BooksRequestDto.class);
@@ -60,17 +54,14 @@ public class BooksService {
 
     public BooksResponseDto getBookById(int id) {
         BooksModel booksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
-        booksModel.setStatus("purchased");
-        repository.save(booksModel);
-        return modelMapper.map(booksModel, BooksResponseDto.class);
+       return modelMapper.map(booksModel, BooksResponseDto.class);
     }
 
     public BooksResponseDto getBookByName(String name) {
         BooksModel booksModel = repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
-        booksModel.setStatus("purchased");
-        repository.save(booksModel);
         return modelMapper.map(booksModel, BooksResponseDto.class);
     }
+
 
     public BooksResponseDto updateBook(int id, BooksRequestDto booksDto) {
         BooksModel optionalBooksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
@@ -78,7 +69,7 @@ public class BooksService {
             BooksModel existingBook = optionalBooksModel;
             existingBook.setName(booksDto.getName());
             existingBook.setRelease(booksDto.getRelease());
-            existingBook.setType(booksDto.getType());
+            existingBook.setCategory(booksDto.getCategory());
 
             AuthorsModel author = authorRepository.save(modelMapper.map(booksDto.getAuthors(), AuthorsModel.class));
             existingBook.setAuthors(author);
@@ -95,7 +86,6 @@ public class BooksService {
     public String deleteBook(int id) {
 
         BooksModel book = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
-        book.setStatus("deleted");
         repository.save(book);
         repository.deleteById(id);
         return " !!! Kitap Bilgileri Silindi || silinen id: " + id;

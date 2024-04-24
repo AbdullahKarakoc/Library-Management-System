@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -19,8 +20,9 @@ public class AuthorsModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private Integer age;
-    private String country;
+    private String surname;
+    @Temporal(TemporalType.DATE)
+    private Date birthdate;
 
     @JsonBackReference
     @OneToMany(mappedBy = "authors",cascade = CascadeType.ALL)
