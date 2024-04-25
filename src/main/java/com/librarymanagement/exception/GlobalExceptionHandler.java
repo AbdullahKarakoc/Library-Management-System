@@ -16,6 +16,8 @@ import java.util.Map;
 @RestControllerAdvice
 @ResponseBody
 public class GlobalExceptionHandler {
+
+
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorMessage handleDataNotFoundException(DataNotFoundException exception) {
@@ -29,13 +31,14 @@ public class GlobalExceptionHandler {
         return errorMessage;
     }
 
+    /* // bu code aktif olduğunda doğru error mesajı veriyor ama status 500 dönüyor
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage handleException(Exception exception) {
         ErrorMessage errorMessage = new ErrorMessage(exception.getMessage());
         return errorMessage;
     }
-
+*/
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,10 +61,11 @@ public class GlobalExceptionHandler {
     }
 
 
-    
+
 
     @ExceptionHandler(InvalidFormatException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidFormatException(InvalidFormatException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidFormatException(InvalidFormatException ex) {
         String invalidValue = ex.getValue().toString();
         String enumType = ex.getTargetType().getName();
         Object[] enumConstants = ex.getTargetType().getEnumConstants();
@@ -70,8 +74,7 @@ public class GlobalExceptionHandler {
 
         String message = String.format("Invalid value '%s' for enum type %s. Valid values are: %s", invalidValue, enumType, validValues);
 
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), message);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), message);
     }
 
     static class ErrorResponse {

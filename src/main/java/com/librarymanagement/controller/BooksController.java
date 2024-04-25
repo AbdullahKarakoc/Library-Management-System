@@ -52,6 +52,7 @@ public class BooksController {
         return ResponseEntity.ok(allBooks);
     }
 
+
     @Operation(
             summary = "Searches for a book by ID",
             description = "Searches for a specific book by its ID.",
@@ -76,7 +77,6 @@ public class BooksController {
             }
     )
     @GetMapping("/booksByName/{name}")
-    //TODO set işlemi yoktur.
     public ResponseEntity<BooksResponseDto> findBookByName(@PathVariable String name){
         BooksResponseDto book = service.getBookByName(name);
         return ResponseEntity.ok(book);

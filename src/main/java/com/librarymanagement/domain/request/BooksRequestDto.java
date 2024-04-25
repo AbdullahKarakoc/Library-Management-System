@@ -1,6 +1,7 @@
 package com.librarymanagement.domain.request;
 
 import com.librarymanagement.enums.Category;
+import com.librarymanagement.util.validator.ValidCategory;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.Valid;
@@ -26,6 +27,7 @@ public class BooksRequestDto {
 
 
     @NotNull(message = "book category is required")
+    @ValidCategory(message = "Category is not valid")
     private Category category;
 
 
