@@ -1,8 +1,8 @@
 package com.librarymanagement.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.librarymanagement.enums.Category;
-import com.librarymanagement.enums.Status;
+import com.librarymanagement.enums.BookCategory;
+import com.librarymanagement.enums.BookStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,9 +26,9 @@ public class BooksModel {
     private int id;
     private String name;
     private Date release;
-    private Category category;
+    private BookCategory bookCategory;
     private boolean deleted = Boolean.FALSE;
-    private Status status;
+    private BookStatus bookStatus;
 
 
 

@@ -1,6 +1,6 @@
 package com.librarymanagement.enums;
 
-public enum Category {
+public enum BookCategory {
     ROMAN("ROMAN"),
     HIKAYE("HIKAYE"),
     BILIM_KURGU("BILIM_KURGU"),
@@ -22,7 +22,7 @@ public enum Category {
 
     private final String value;
 
-    Category(String value) {
+    BookCategory(String value) {
         this.value = value;
     }
 

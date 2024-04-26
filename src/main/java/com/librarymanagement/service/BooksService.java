@@ -69,7 +69,7 @@ public class BooksService {
             BooksModel existingBook = optionalBooksModel;
             existingBook.setName(booksDto.getName());
             existingBook.setRelease(booksDto.getRelease());
-            existingBook.setCategory(booksDto.getCategory());
+            existingBook.setBookCategory(booksDto.getBookCategory());
 
             AuthorsModel author = authorRepository.save(modelMapper.map(booksDto.getAuthors(), AuthorsModel.class));
             existingBook.setAuthors(author);

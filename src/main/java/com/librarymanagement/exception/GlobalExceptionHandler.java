@@ -1,14 +1,19 @@
 package com.librarymanagement.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.librarymanagement.enums.BookCategory;
+import com.librarymanagement.enums.OurUserRole;
+import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.spi.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,31 +68,35 @@ public class GlobalExceptionHandler {
 
 
 
-    @ExceptionHandler(InvalidFormatException.class)
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleInvalidFormatException(InvalidFormatException ex) {
-        String invalidValue = ex.getValue().toString();
-        String enumType = ex.getTargetType().getName();
-        Object[] enumConstants = ex.getTargetType().getEnumConstants();
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Geçersiz Veri");
 
-        String validValues = Arrays.toString(enumConstants);
+        String errorMessage = ex.getMessage();
 
-        String message = String.format("Invalid value '%s' for enum type %s. Valid values are: %s", invalidValue, enumType, validValues);
-
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), message);
-    }
-
-    static class ErrorResponse {
-        private int status;
-        private String message;
-
-        public ErrorResponse(int status, String message) {
-            this.status = status;
-            this.message = message;
+        // Rol hatası olup olmadığını kontrol edin
+        if (errorMessage.contains("roles")) {
+            errorResponse.setErrorMessage("Geçersiz Rol Değeri");
+            errorResponse.setDetails("Girdiğiniz rol değeri enumda bulunamadı. Kabul Edilen Değerler: " + Arrays.toString(OurUserRole.values()));
+        }
+        // Kategori hatası olup olmadığını kontrol edin
+        else if (errorMessage.contains("category")) {
+            errorResponse.setErrorMessage("Geçersiz Kategori Değeri");
+            errorResponse.setDetails("Girdiğiniz kategori değeri enumda bulunamadı. Kabul Edilen Değerler: " + Arrays.toString(BookCategory.values()));
+        }
+        // Diğer hatalar için genel bir mesaj gösterin
+        else {
+            errorResponse.setErrorMessage("Hata Oluştu");
+            errorResponse.setDetails(ex.getMessage());
         }
 
-        // Getter and setter methods
+        errorResponse.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+
 
 
 

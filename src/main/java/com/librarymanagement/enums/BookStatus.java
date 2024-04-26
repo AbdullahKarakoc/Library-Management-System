@@ -1,6 +1,6 @@
 package com.librarymanagement.enums;
 
-public enum Status {
+public enum BookStatus {
     KIRALANDI,
     SATILDI,
     KUTUPHANEDE
