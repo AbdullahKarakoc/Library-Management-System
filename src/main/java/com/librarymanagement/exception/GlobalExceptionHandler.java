@@ -1,8 +1,6 @@
 package com.librarymanagement.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.librarymanagement.enums.BookCategory;
-import com.librarymanagement.enums.OurUserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.spi.ErrorMessage;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +79,7 @@ public class GlobalExceptionHandler {
             // Rol hataları için kontrol
             if (fieldName.equals("roles")) {
                 errorResponse.setErrorMessage("Geçersiz Rol Değeri");
-                errorResponse.setDetails("Girdiğiniz rol değeri geçersiz."); // + Arrays.toString(OurUserRole.values()));
+                errorResponse.setDetails("Girdiğiniz rol değeri geçersiz."); // + Arrays.toString(MemberRole.values()));
             }
             // Kategori hataları için kontrol
             else if (fieldName.equals("bookCategory")) {

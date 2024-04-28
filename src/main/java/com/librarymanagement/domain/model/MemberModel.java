@@ -1,13 +1,9 @@
 package com.librarymanagement.domain.model;
 
-import com.librarymanagement.enums.OurUserRole;
-import com.librarymanagement.enums.OurUserStatus;
+import com.librarymanagement.enums.MemberRole;
+import com.librarymanagement.enums.MemberStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +20,7 @@ import java.util.UUID;
 @Table(name = "ourusers")
 @SQLDelete(sql = "UPDATE ourusers SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-public class OurUser {
+public class MemberModel {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
@@ -34,8 +30,8 @@ public class OurUser {
     private String phone;
     private String email;
     private String password;
-    private OurUserRole roles;
-    private OurUserStatus userStatus;
+    private MemberRole roles;
+    private MemberStatus userStatus;
     private boolean deleted = Boolean.FALSE;
 
 }

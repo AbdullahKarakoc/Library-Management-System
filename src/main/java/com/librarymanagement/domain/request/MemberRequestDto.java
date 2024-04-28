@@ -1,6 +1,6 @@
 package com.librarymanagement.domain.request;
 
-import com.librarymanagement.enums.OurUserRole;
+import com.librarymanagement.enums.MemberRole;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UsersRequestDto {
+public class MemberRequestDto {
 
     @NotBlank(message = "User name is required")
     @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "User's name must be only character")
@@ -32,7 +32,7 @@ public class UsersRequestDto {
     @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$",message = "Password is not valid") // 1 büyük, 1 küçük, 1 özel karakter ve min 8 karakter
     private String password;
 
-    private OurUserRole roles;
+    private MemberRole roles;
 
 }
 

@@ -1,6 +1,6 @@
 package com.librarymanagement.enums;
 
-public enum OurUserStatus {
+public enum MemberStatus {
     ACTIVE,
     INACTIVE,
     INVITED

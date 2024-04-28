@@ -1,21 +1,17 @@
 package com.librarymanagement.controller;
 
 import com.librarymanagement.component.SwaggerAnnotations;
-import com.librarymanagement.domain.request.UsersRequestDto;
-import com.librarymanagement.domain.response.BooksResponseDto;
-import com.librarymanagement.domain.response.UsersResponseDto;
-import com.librarymanagement.repository.OurUserRepo;
+import com.librarymanagement.domain.request.MemberRequestDto;
+import com.librarymanagement.domain.response.MemberResponseDto;
+import com.librarymanagement.repository.MemberRepository;
 import com.librarymanagement.repository.BooksRepository;
-import com.librarymanagement.service.UsersService;
+import com.librarymanagement.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +21,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Users-Controller", description = "Controller managing operations related to users")
-public class UsersController {
+public class MemberController {
     @Autowired
-    private OurUserRepo ourUserRepo;
+    private MemberRepository ourUserRepo;
     @Autowired
-    private UsersService usersService;
+    private MemberService memberService;
     @Autowired
     private BooksRepository booksRepository;
     @Autowired
@@ -49,8 +45,8 @@ public class UsersController {
             }
     )
     @PostMapping("/users")
-    public ResponseEntity<String> addUser(@Valid @RequestBody UsersRequestDto userDto) {
-        UsersRequestDto savedUser = usersService.saveUser(userDto);
+    public ResponseEntity<String> addUser(@Valid @RequestBody MemberRequestDto userDto) {
+        MemberRequestDto savedUser = memberService.saveUser(userDto);
         return ResponseEntity.ok("Kullanıcı başarıyla eklendi");
     }
 
@@ -60,8 +56,8 @@ public class UsersController {
             description = "An endpoint used to list all users."
     )
     @GetMapping("/users")
-    public ResponseEntity<List<UsersResponseDto>> getAllUsers() {
-        List<UsersResponseDto> allUsers = usersService.getUsers();
+    public ResponseEntity<List<MemberResponseDto>> getAllUsers() {
+        List<MemberResponseDto> allUsers = memberService.getUsers();
         return ResponseEntity.ok(allUsers);
 
     }
@@ -73,7 +69,7 @@ public class UsersController {
     )
     @GetMapping("/users/me")
     public ResponseEntity<Object> getMyDetails() {
-        UsersResponseDto user = usersService.getUser();
+        MemberResponseDto user = memberService.getUser();
         return ResponseEntity.ok(user);
     }
 
@@ -85,8 +81,8 @@ public class UsersController {
             description = "An endpoint used to update an existing user by their ID."
     )
     @PutMapping("/users/{userId}")
-    public ResponseEntity<String>  updateUser(@PathVariable UUID userId, @Valid @RequestBody UsersRequestDto updatedUserDto) {
-        UsersRequestDto updatedUser = usersService.updateUser(userId, updatedUserDto);
+    public ResponseEntity<String>  updateUser(@PathVariable UUID userId, @Valid @RequestBody MemberRequestDto updatedUserDto) {
+        MemberRequestDto updatedUser = memberService.updateUser(userId, updatedUserDto);
         return ResponseEntity.ok("Kullanıcı başarıyla güncellendi");
     }
 
@@ -97,7 +93,7 @@ public class UsersController {
     )
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID userId) {
-        usersService.deleteUser(userId);
+        memberService.deleteUser(userId);
         return ResponseEntity.ok("Kullanıcı başarıyla silindi");
     }
 

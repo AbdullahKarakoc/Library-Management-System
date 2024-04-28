@@ -1,7 +1,7 @@
 package com.librarymanagement.config.security;
 
-import com.librarymanagement.domain.model.OurUser;
-import com.librarymanagement.repository.OurUserRepo;
+import com.librarymanagement.domain.model.MemberModel;
+import com.librarymanagement.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +13,10 @@ import java.util.Optional;
 @Configuration
 public class OurUserInfoUserDetailsService implements UserDetailsService {
     @Autowired
-    private OurUserRepo ourUserRepo;
+    private MemberRepository ourUserRepo;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<OurUser> user = ourUserRepo.findByEmail(username);
+        Optional<MemberModel> user = ourUserRepo.findByEmail(username);
         return user.map(OurUserInfoDetails::new).orElseThrow(()->new UsernameNotFoundException("User Does Not Exist"));
     }
 }

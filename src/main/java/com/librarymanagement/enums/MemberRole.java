@@ -1,13 +1,13 @@
 package com.librarymanagement.enums;
 
 
-public enum OurUserRole {
+public enum MemberRole {
     ADMIN("ADMIN"),
     USER("USER");
 
     private final String roleName;
 
-    OurUserRole(String roleName) {
+    MemberRole(String roleName) {
         this.roleName = roleName;
     }
 
