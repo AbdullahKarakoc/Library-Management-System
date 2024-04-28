@@ -1,9 +1,12 @@
 package com.librarymanagement.controller;
 
 import com.librarymanagement.component.SwaggerAnnotations;
-import com.librarymanagement.domain.model.OurUser;
+import com.librarymanagement.domain.request.UsersRequestDto;
+import com.librarymanagement.domain.response.BooksResponseDto;
+import com.librarymanagement.domain.response.UsersResponseDto;
 import com.librarymanagement.repository.OurUserRepo;
 import com.librarymanagement.repository.BooksRepository;
+import com.librarymanagement.service.UsersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,12 +19,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Users-Controller", description = "Controller managing operations related to users")
 public class UsersController {
     @Autowired
     private OurUserRepo ourUserRepo;
+    @Autowired
+    private UsersService usersService;
     @Autowired
     private BooksRepository booksRepository;
     @Autowired
@@ -30,14 +37,6 @@ public class UsersController {
     private SwaggerAnnotations swaggerAnnotations;
 
 
-    @Operation(
-            summary = "Go to the homepage",
-            description = "An endpoint to go to the general homepage without requiring authentication."
-    )
-    @GetMapping("/")
-    public ResponseEntity<String> goHome() {
-        return ResponseEntity.ok("This is publicly accessible without needing authentication");
-    }
 
 
     @Operation(
@@ -49,13 +48,9 @@ public class UsersController {
             }
     )
     @PostMapping("/users")
-    public ResponseEntity<Object> saveUSer(@Valid @RequestBody OurUser ourUser) {
-        ourUser.setPassword(passwordEncoder.encode(ourUser.getPassword()));
-        OurUser result = ourUserRepo.save(ourUser);
-        if (result.getId() > 0) {
-            return ResponseEntity.ok("User Was Saved");
-        }
-        return ResponseEntity.status(404).body("Error, User Not Saved");
+    public ResponseEntity<String> addUser(@Valid @RequestBody UsersRequestDto userDto) {
+        UsersRequestDto savedUser = usersService.saveUser(userDto);
+        return ResponseEntity.ok("Kullanıcı başarıyla eklendi");
     }
 
 
@@ -64,8 +59,11 @@ public class UsersController {
             description = "An endpoint used to list all users."
     )
     @GetMapping("/users")
-    public ResponseEntity<Object> getAllUsers() {
-        return ResponseEntity.ok(ourUserRepo.findAll());
+    public ResponseEntity<List<UsersResponseDto>> getAllUsers() {
+        List<UsersResponseDto> allUsers = usersService.getUsers();
+        return ResponseEntity.ok(allUsers);
+
+       // return ResponseEntity.ok(ourUserRepo.findAll());
     }
 
 

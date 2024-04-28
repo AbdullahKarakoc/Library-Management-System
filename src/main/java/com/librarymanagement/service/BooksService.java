@@ -3,6 +3,7 @@ package com.librarymanagement.service;
 
 import com.librarymanagement.domain.request.BooksRequestDto;
 import com.librarymanagement.domain.response.BooksResponseDto;
+import com.librarymanagement.enums.BookStatus;
 import com.librarymanagement.exception.DataNotFoundException;
 import com.librarymanagement.domain.model.AuthorsModel;
 import com.librarymanagement.domain.model.BooksModel;
@@ -40,6 +41,7 @@ public class BooksService {
         BooksModel book = modelMapper.map(bookDto, BooksModel.class);
         book.setAuthors(author);
         book.setPublishers(publisher);
+        book.setBookStatus(BookStatus.KUTUPHANEDE);
 
         BooksModel savedBook = repository.save(book);
         return modelMapper.map(savedBook, BooksRequestDto.class);

@@ -32,9 +32,9 @@ public class BooksController {
             }
     )
     @PostMapping("/books")
-    public ResponseEntity<BooksRequestDto> addBooks(@Valid @RequestBody BooksRequestDto booksDto){
+    public ResponseEntity<String> addBooks(@Valid @RequestBody BooksRequestDto booksDto){
         BooksRequestDto savedBook = service.saveBook(booksDto);
-        return ResponseEntity.ok(savedBook);
+        return ResponseEntity.ok("Kitap başarıyla eklendi");
     }
 
 
@@ -100,9 +100,9 @@ public class BooksController {
             }
     )
     @PutMapping("/books/{id}")
-    public ResponseEntity<BooksResponseDto> updateBook(@PathVariable int id, @RequestBody BooksRequestDto booksDto){
+    public ResponseEntity<String> updateBook(@PathVariable int id, @RequestBody BooksRequestDto booksDto){
         BooksResponseDto updatedBook = service.updateBook(id, booksDto);
-        return ResponseEntity.ok(updatedBook);
+        return ResponseEntity.ok("Kitap başarıyla güncellendi");
     }
 
 
@@ -117,7 +117,7 @@ public class BooksController {
     @DeleteMapping("/books/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable int id){
         String result = service.deleteBook(id);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok("Kitap başarıyla silindi");
     }
 
 

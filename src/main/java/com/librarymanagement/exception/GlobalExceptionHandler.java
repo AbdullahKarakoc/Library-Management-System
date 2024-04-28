@@ -89,7 +89,8 @@ public class GlobalExceptionHandler {
         // Diğer hatalar için genel bir mesaj gösterin
         else {
             errorResponse.setErrorMessage("Hata Oluştu");
-            errorResponse.setDetails(ex.getMessage());
+            //errorResponse.setDetails(ex.getMessage()); bu enumla birlikte bütün mesajı dönderir
+            errorResponse.setDetails("geçersiz rol");
         }
 
         errorResponse.setTimestamp(LocalDateTime.now());
@@ -98,7 +99,10 @@ public class GlobalExceptionHandler {
     }
 
 
-
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return ResponseEntity.badRequest().body("Error: " + ex.getMessage());
+    }
 
 
 }
