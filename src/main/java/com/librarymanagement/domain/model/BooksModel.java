@@ -27,8 +27,9 @@ public class BooksModel {
     private String name;
     private Date release;
     private BookCategory bookCategory;
-    private boolean deleted = Boolean.FALSE;
     private BookStatus bookStatus;
+    private boolean deleted = Boolean.FALSE;
+
 
 
 

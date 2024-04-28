@@ -63,7 +63,6 @@ public class UsersController {
         List<UsersResponseDto> allUsers = usersService.getUsers();
         return ResponseEntity.ok(allUsers);
 
-       // return ResponseEntity.ok(ourUserRepo.findAll());
     }
 
 
@@ -71,16 +70,35 @@ public class UsersController {
             summary = "Get my details",
             description = "An endpoint used to get details of the logged-in user."
     )
-    @GetMapping("/users/single")
+    @GetMapping("/users/me")
     public ResponseEntity<Object> getMyDetails() {
-        return ResponseEntity.ok(ourUserRepo.findByEmail(getLoggedInUserDetails().getUsername()));
+        UsersResponseDto user = usersService.getUser();
+        return ResponseEntity.ok(user);
     }
 
-    public UserDetails getLoggedInUserDetails() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            return (UserDetails) authentication.getPrincipal();
-        }
-        return null;
+
+
+
+    @Operation(
+            summary = "Update user",
+            description = "An endpoint used to update an existing user by their ID."
+    )
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<String>  updateUser(@PathVariable int userId, @Valid @RequestBody UsersRequestDto updatedUserDto) {
+        UsersRequestDto updatedUser = usersService.updateUser(userId, updatedUserDto);
+        return ResponseEntity.ok("Kullanıcı başarıyla güncellendi");
     }
+
+
+    @Operation(
+            summary = "Delete user",
+            description = "An endpoint used to delete an existing user by their ID."
+    )
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable int userId) {
+        usersService.deleteUser(userId);
+        return ResponseEntity.ok("Kullanıcı başarıyla silindi");
+    }
+
+
 }

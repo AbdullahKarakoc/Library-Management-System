@@ -11,12 +11,16 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ourusers")
+@SQLDelete(sql = "UPDATE ourusers SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class OurUser {
 
     @Id
@@ -29,4 +33,6 @@ public class OurUser {
     private String password;
     private OurUserRole roles;
     private OurUserStatus userStatus;
+    private boolean deleted = Boolean.FALSE;
+
 }

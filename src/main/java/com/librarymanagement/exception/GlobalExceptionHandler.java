@@ -74,23 +74,24 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Geçersiz Veri");
 
-        String errorMessage = ex.getMessage();
+        if (ex.getCause() instanceof InvalidFormatException) {
+            InvalidFormatException invalidFormatException = (InvalidFormatException) ex.getCause();
+            String fieldName = invalidFormatException.getPath().get(0).getFieldName();
+            String fieldValue = invalidFormatException.getValue().toString();
 
-        // Rol hatası olup olmadığını kontrol edin
-        if (errorMessage.contains("roles")) {
-            errorResponse.setErrorMessage("Geçersiz Rol Değeri");
-            errorResponse.setDetails("Girdiğiniz rol değeri enumda bulunamadı. Kabul Edilen Değerler: " + Arrays.toString(OurUserRole.values()));
-        }
-        // Kategori hatası olup olmadığını kontrol edin
-        else if (errorMessage.contains("category")) {
-            errorResponse.setErrorMessage("Geçersiz Kategori Değeri");
-            errorResponse.setDetails("Girdiğiniz kategori değeri enumda bulunamadı. Kabul Edilen Değerler: " + Arrays.toString(BookCategory.values()));
-        }
-        // Diğer hatalar için genel bir mesaj gösterin
-        else {
+            // Rol hataları için kontrol
+            if (fieldName.equals("roles")) {
+                errorResponse.setErrorMessage("Geçersiz Rol Değeri");
+                errorResponse.setDetails("Girdiğiniz rol değeri geçersiz."); // + Arrays.toString(OurUserRole.values()));
+            }
+            // Kategori hataları için kontrol
+            else if (fieldName.equals("bookCategory")) {
+                errorResponse.setErrorMessage("Geçersiz Kategori Değeri");
+                errorResponse.setDetails("Girdiğiniz kategori değeri geçersiz."); // + Arrays.toString(BookCategory.values()));
+            }
+        } else {
             errorResponse.setErrorMessage("Hata Oluştu");
-            //errorResponse.setDetails(ex.getMessage()); bu enumla birlikte bütün mesajı dönderir
-            errorResponse.setDetails("geçersiz rol");
+            errorResponse.setDetails("Geçersiz JSON formatı");
         }
 
         errorResponse.setTimestamp(LocalDateTime.now());
