@@ -15,9 +15,11 @@ import com.librarymanagement.util.ErrorMessages;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.objenesis.instantiator.util.UnsafeUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,19 +56,19 @@ public class BooksService {
         return dtos;
     }
 
-    public BooksResponseDto getBookById(int id) {
-        BooksModel booksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+    public BooksResponseDto getBookById(UUID id) {
+        BooksModel booksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
        return modelMapper.map(booksModel, BooksResponseDto.class);
     }
 
     public BooksResponseDto getBookByName(String name) {
-        BooksModel booksModel = repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        BooksModel booksModel = repository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
         return modelMapper.map(booksModel, BooksResponseDto.class);
     }
 
 
-    public BooksResponseDto updateBook(int id, BooksRequestDto booksDto) {
-        BooksModel optionalBooksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+    public BooksResponseDto updateBook(UUID id, BooksRequestDto booksDto) {
+        BooksModel optionalBooksModel = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
             BooksModel existingBook = optionalBooksModel;
             existingBook.setName(booksDto.getName());
@@ -85,9 +87,9 @@ public class BooksService {
         }
 
 
-    public String deleteBook(int id) {
+    public String deleteBook(UUID id) {
 
-        BooksModel book = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
+        BooksModel book = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
         repository.save(book);
         repository.deleteById(id);
         return " !!! Kitap Bilgileri Silindi || silinen id: " + id;

@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -84,7 +85,7 @@ public class UsersController {
             description = "An endpoint used to update an existing user by their ID."
     )
     @PutMapping("/users/{userId}")
-    public ResponseEntity<String>  updateUser(@PathVariable int userId, @Valid @RequestBody UsersRequestDto updatedUserDto) {
+    public ResponseEntity<String>  updateUser(@PathVariable UUID userId, @Valid @RequestBody UsersRequestDto updatedUserDto) {
         UsersRequestDto updatedUser = usersService.updateUser(userId, updatedUserDto);
         return ResponseEntity.ok("Kullanıcı başarıyla güncellendi");
     }
@@ -95,7 +96,7 @@ public class UsersController {
             description = "An endpoint used to delete an existing user by their ID."
     )
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable int userId) {
+    public ResponseEntity<String> deleteUser(@PathVariable UUID userId) {
         usersService.deleteUser(userId);
         return ResponseEntity.ok("Kullanıcı başarıyla silindi");
     }

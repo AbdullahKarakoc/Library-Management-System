@@ -8,9 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -22,8 +24,8 @@ import java.util.Date;
 public class BooksModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    private UUID id;
     private String name;
     private Date release;
     private BookCategory bookCategory;

@@ -37,7 +37,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/books/{id}").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/users/single").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAnyAuthority("ADMIN", "USER")
+
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

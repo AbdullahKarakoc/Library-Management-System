@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,7 +75,7 @@ public class UsersService {
 
 
 
-    public UsersRequestDto updateUser(int userId, UsersRequestDto updatedUserDto) {
+    public UsersRequestDto updateUser(UUID userId, UsersRequestDto updatedUserDto) {
         OurUser existingUser = ourUserRepo.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
 
         existingUser.setName(updatedUserDto.getName());
@@ -88,7 +89,7 @@ public class UsersService {
         return modelMapper.map(savedUser, UsersRequestDto.class);
     }
 
-    public void deleteUser(int userId) {
+    public void deleteUser(UUID userId) {
         OurUser userToDelete = ourUserRepo.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
         userToDelete.setUserStatus(OurUserStatus.INACTIVE);
         ourUserRepo.save(userToDelete);

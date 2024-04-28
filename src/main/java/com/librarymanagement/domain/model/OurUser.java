@@ -12,7 +12,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
+
+import java.util.UUID;
 
 @Data
 @Entity
@@ -24,8 +27,8 @@ import org.hibernate.annotations.Where;
 public class OurUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    private UUID id;
     private String name;
     private String surname;
     private String phone;

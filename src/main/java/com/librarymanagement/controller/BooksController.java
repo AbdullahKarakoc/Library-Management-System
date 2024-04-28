@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/api")
 @RestController
@@ -62,7 +63,7 @@ public class BooksController {
             }
     )
     @GetMapping("/booksById/{id}")
-    public ResponseEntity<BooksResponseDto> findBookById(@PathVariable int id){
+    public ResponseEntity<BooksResponseDto> findBookById(@PathVariable UUID id){
         BooksResponseDto book = service.getBookById(id);
         return ResponseEntity.ok(book);
     }
@@ -100,7 +101,7 @@ public class BooksController {
             }
     )
     @PutMapping("/books/{id}")
-    public ResponseEntity<String> updateBook(@PathVariable int id, @RequestBody BooksRequestDto booksDto){
+    public ResponseEntity<String> updateBook(@PathVariable UUID id, @RequestBody BooksRequestDto booksDto){
         BooksResponseDto updatedBook = service.updateBook(id, booksDto);
         return ResponseEntity.ok("Kitap başarıyla güncellendi");
     }
@@ -115,7 +116,7 @@ public class BooksController {
             }
     )
     @DeleteMapping("/books/{id}")
-    public ResponseEntity<String> deleteBook(@PathVariable int id){
+    public ResponseEntity<String> deleteBook(@PathVariable UUID id){
         String result = service.deleteBook(id);
         return ResponseEntity.ok("Kitap başarıyla silindi");
     }
