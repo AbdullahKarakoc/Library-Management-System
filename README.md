@@ -15,18 +15,23 @@
 >**Book:** </br>
 name: (min:1, max:50) is required/only characters</br> 
 release: (min:1, max:2024) is required/only number</br> 
-type: (min:5, max:20) is required/only characters</br></br>
+category: (min:5, max:20) is required/only characters</br></br>
 >**Author:** </br> 
-name: (min:10, max:40) is required/only characters</br> 
-age: (min:3, max:150) is required/only number</br>
-country: (min:2, max:40) is required/only characters</br></br>
+name: (min:10, max:40) is required/only characters</br>
+surname: (min:10, max:40) is required/only characters</br>
+birthdate: (Birthdate must be in the past) is required/only number</br>
 >**Publisher:** </br>
-name: (min:2, max:30) is required/only characters
+name: (min:2, max:30) is required/only characters</br>
+address: is required/only characters or number
 
->**User:** </br> 
+
+>**Member:** </br>
+name: (min:1, max:50) is required/only characters</br>
+surname: (min:1, max:50) is required/only characters</br>
+phone: (+90|0) is required/only Turkish phone</br>
 email: Must be email type</br>
 password: 1 büyük, 1 küçük, 1 özel karakter ve 8-20 arası boyut </br> 
-roles: is required
+roles: (ADMIN|USER) is required
 
 
 
@@ -66,6 +71,7 @@ roles: is required
   </br>
 ### 3.2 Kütüphane ve Bağımlılıklar
 * Spring Boot Data Jpa
+* Hibernate
 * Spring Boot Security
 * Lombok
 * Model Mapper
@@ -79,51 +85,62 @@ roles: is required
 
 ### 4. ENDPOİNT
 ## Book
-| HTTP Method | Endpoint                | Açıklama                              | Yetki                |
-| ----------- | ----------------------- | ------------------------------------- | -------------------- |
-| GET         | /api/books              | Tüm kitapları çeker                   | ADMIN & USER         |
-| GET         | /api/booksById/{id}     | Id'e göre kitap çeker                 | ADMIN & USER         |
-| GET         | /api/booksByName/{name} | Name'e göre kitap çeker               | ADMIN & USER         |
-| POST        | /api/books              | Yeni kitap oluşturur                  | ADMIN                |
-| PUT         | /api/books/{id}         | Id'e göre varolan kitabı günceller    | ADMIN                |
-| DELETE      | /api/books/{id}         | Id'e göre kitabı siler                | ADMIN                |
+| HTTP Method | Endpoint                      | Açıklama                                             | Yetki        |
+|-------------|-------------------------------|------------------------------------------------------|--------------|
+| GET         | /api/books                    | Tüm kitapları çeker                                  | ADMIN & USER |
+| GET         | /api/booksById/{id}           | Id'e göre kitap çeker                                | ADMIN & USER |
+| GET         | /api/booksByName/{name}       | Name'e göre kitap çeker                              | ADMIN & USER |
+| POST        | /api/books                    | Yeni kitap oluşturur                                 | ADMIN        |
+| PUT         | /api/books/{id}               | Id'e göre varolan kitabı günceller                   | ADMIN        |
+| DELETE      | /api/books/{id}               | Id'e göre kitabı siler                               | ADMIN        |
+| POST        | /api/bookIssue/{userId}       | User Id'e göre kitap kiralar/Request param(bookName) | ADMIN & USER |
+| POST        | /bookReturn/{userId}/{bookId} | User Id ve Book Id ile kitap iade eder               | ADMIN & USER |
 
-## User
-| HTTP Method | Endpoint                | Description                           | Yetki              |
-| ----------- | ----------------------- | ------------------------------------- | ------------------ |
-| GET         | /api/users              | Tüm kullanıcıları bilgilerini çeker   | ADMIN              |
-| GET         | /api/users/single       | İstek atan kullancı bilgisini çeker   | ADMIN & USER       |
-| POST        | /api/users              | Yeni kullanıcı oluşturur              | ADMIN & USER       |
 
+
+
+
+## Member
+| HTTP Method | Endpoint        | Description                                         | Yetki              |
+|-------------|-----------------|-----------------------------------------------------| ------------------ |
+| GET         | /api/users      | Tüm kullanıcıları bilgilerini çeker                 | ADMIN              |
+| GET         | /api/users/me   | İstek atan kullancı bilgisini çeker                 | ADMIN & USER       |
+| POST        | /api/users      | Yeni kullanıcı oluşturur                            | ADMIN & USER       |
+| PUT         | /api/users/{id} | Id'e göre kullanıcıyı günceller(Mail ve Role hariç) | ADMIN & USER       |
+| DELETE      | /api/users/{id} | Id'e göre kullanıcıyı siler                         | ADMIN & USER       |
 </br></br></br>
 
 ## 5. TEST
 ### Book
 >{
-"name": "Suç ve Ceza",
-"release": 1879,
-"type": "Macera",
-"authors": {
-"name": "da Vinci",
-"age": 80,
-"country": "Italya"
-},
-"publishers": {
-"name": "Sınav yayınevi"
+"name": "Suç ve Ceza",</br>
+"release": "1894-03-28",</br>
+"bookCategory": "POLISIYE",</br>
+"authors": {</br>
+"name": "Fyodor Dostoyevski",</br>
+"surname": "Dostoyevski",</br>
+"birthdate": "1861-07-13"</br>
+},</br>
+"publishers": {</br>
+"name": "İş Bankası Kültür Yayınları",</br>
+"address": "no:78/4 Yeni mahalle Çankaya Ankara/Turkey"</br>
 }
 }
 
 ### User
 >{
-"email": "davinci1453@gmail.com",
-"password": "DaVinci1453*",
-"roles": "USER"
+"name": "Nur",</br>
+"surname": "Çınar",</br>
+"phone":"+905423351265",</br>
+"email":"nur@gmail.com",</br>
+"password":"Nur1453*",</br>
+"roles":"USER"</br>
 }
 </br></br></br>
 
 
 ## 6. ERD
-![Erd resmi](https://github.com/AbdullahKarakoc/Library-Management-System/blob/main/images/ERD.png)
+![](images/ERD.png)
 
 </br></br></br>
 

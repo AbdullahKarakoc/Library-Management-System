@@ -14,6 +14,6 @@ public class PublishersRequestDto {
     private String name;
 
     @NotBlank(message = "publishers name is required")
-    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Publisher's name must be only characters") // sadece harf olabilir, sayı ve özel karakter olamaz
+    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s\\d]+$",message = "Publisher's name must be characters or number") // sadece harf olabilir, sayı ve özel karakter olamaz
     private String address;
 }

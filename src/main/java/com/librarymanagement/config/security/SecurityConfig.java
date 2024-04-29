@@ -36,7 +36,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/books/{id}").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/bookIssue/{userId}").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers(HttpMethod.POST, "/api/bookReturn/{userId}/{bookId}").hasAnyAuthority("ADMIN", "USER")
-
                         .requestMatchers(HttpMethod.DELETE, "/api/books/{id}").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users").hasAnyAuthority("ADMIN")
