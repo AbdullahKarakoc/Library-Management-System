@@ -12,21 +12,22 @@
 * Adminler kitap ekleyebilir silebilir ve güncelleyebilirler.
 * Kullanıcı aynı anda en fazla 5 kitap kiralayabilir.
 * Kullanıcı kiraladığı kitapları 10 gün içinde iade etmezse hergün için gecikme ücreti öder.
+  </br>
 
-
-
+### 1.3 Model
 >**Book:** </br>
 name: (min:1, max:50) is required/only characters</br> 
 release: (min:1, max:2024) is required/only number</br> 
 category: (min:5, max:20) is required/only characters</br></br>
+
 >**Author:** </br> 
 name: (min:10, max:40) is required/only characters</br>
 surname: (min:10, max:40) is required/only characters</br>
 birthdate: (Birthdate must be in the past) is required/only number</br>
+
 >**Publisher:** </br>
 name: (min:2, max:30) is required/only characters</br>
 address: is required/only characters or number
-
 
 >**Member:** </br>
 name: (min:1, max:50) is required/only characters</br>
