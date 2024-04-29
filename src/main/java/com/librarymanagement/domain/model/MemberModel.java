@@ -38,7 +38,7 @@ public class MemberModel {
     private boolean deleted = Boolean.FALSE;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user" )
+    @OneToMany(mappedBy = "members" )
     private List<BooksModel> bookList = new ArrayList<>();
 
 

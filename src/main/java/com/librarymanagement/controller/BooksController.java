@@ -133,7 +133,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "User or book not found")
             }
     )
-    @PostMapping("/bookIssue/{userId}")
+    @PutMapping("/bookIssue/{userId}")
     public ResponseEntity<LocalDate> bookIssueControlHandler(
             @PathVariable("userId") UUID userId,
             @RequestParam String bookName){
@@ -152,7 +152,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "User or book not found")
             }
     )
-    @PostMapping("/bookReturn/{userId}/{bookId}")
+    @PutMapping("/bookReturn/{userId}/{bookId}")
     public ResponseEntity<Integer> bookReturnControlHandler(
             @PathVariable("userId") UUID userId,
             @PathVariable("bookId") UUID bookId){
@@ -161,13 +161,6 @@ public class BooksController {
 
         return new ResponseEntity<Integer>(Response, HttpStatus.OK);
     }
-
-
-
-
-
-
-
 
 
 

@@ -49,5 +49,5 @@ public class BooksModel {
     private PublishersModel publishers;
 
     @ManyToOne
-    private MemberModel user;
+    private MemberModel members;
 }

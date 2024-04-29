@@ -2,6 +2,7 @@ package com.librarymanagement.service;
 
 import com.librarymanagement.domain.model.BooksModel;
 import com.librarymanagement.domain.model.MemberModel;
+import com.librarymanagement.enums.BookStatus;
 import com.librarymanagement.exception.BookException;
 import com.librarymanagement.exception.DataNotFoundException;
 import com.librarymanagement.repository.BooksRepository;
@@ -56,7 +57,8 @@ public class BookIssueReturnImpl implements BookIssueReturn {
             book.setIssued(true);
             book.setBookIssueDate(LocalDate.now());
             book.setBookReturnDate(LocalDate.now().plusDays(10));
-            book.setUser(user);
+            book.setMembers(user);
+            book.setBookStatus(BookStatus.KIRALANDI);
             user.getBookList().add(book);
             bookRepository.save(book);
             userRepository.save(user);
@@ -113,8 +115,9 @@ public class BookIssueReturnImpl implements BookIssueReturn {
             userRepository.save(user);
             bookReturn.setBookReturnDate(null);
             bookReturn.setBookIssueDate(null);
-            bookReturn.setUser(null);
+            bookReturn.setMembers(null);
             bookReturn.setIssued(false);
+            bookReturn.setBookStatus(BookStatus.KUTUPHANEDE);
             bookRepository.save(bookReturn);
         }
         else
