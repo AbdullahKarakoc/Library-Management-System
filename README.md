@@ -10,6 +10,9 @@
 * Kitap eklemek silmek ve düzenlemek için ADMIN hesabı oluşturulmalı.
 * Kullanıcılar ve Adminler İd ve isime göre kitap arama yapabilir.
 * Adminler kitap ekleyebilir silebilir ve güncelleyebilirler.
+* Kullanıcı aynı anda en fazla 5 kitap kiralayabilir.
+* Kullanıcı kiraladığı kitapları 10 gün içinde iade etmezse hergün için gecikme ücreti öder.
+
 
 
 >**Book:** </br>
@@ -93,8 +96,8 @@ roles: (ADMIN|USER) is required
 | POST        | /api/books                    | Yeni kitap oluşturur                                 | ADMIN        |
 | PUT         | /api/books/{id}               | Id'e göre varolan kitabı günceller                   | ADMIN        |
 | DELETE      | /api/books/{id}               | Id'e göre kitabı siler                               | ADMIN        |
-| POST        | /api/bookIssue/{userId}       | User Id'e göre kitap kiralar/Request param(bookName) | ADMIN & USER |
-| POST        | /bookReturn/{userId}/{bookId} | User Id ve Book Id ile kitap iade eder               | ADMIN & USER |
+| PUT         | /api/bookIssue/{userId}       | User Id'e göre kitap kiralar/Request param(bookName) | ADMIN & USER |
+| PUT         | /bookReturn/{userId}/{bookId} | User Id ve Book Id ile kitap iade eder               | ADMIN & USER |
 
 
 
