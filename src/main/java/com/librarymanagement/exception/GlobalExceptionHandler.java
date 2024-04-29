@@ -34,14 +34,7 @@ public class GlobalExceptionHandler {
         return errorMessage;
     }
 
-    /* // bu code aktif olduğunda doğru error mesajı veriyor ama status 500 dönüyor
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorMessage handleException(Exception exception) {
-        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage());
-        return errorMessage;
-    }
-*/
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -70,7 +63,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Geçersiz Veri");
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalıd argument");
 
         if (ex.getCause() instanceof InvalidFormatException) {
             InvalidFormatException invalidFormatException = (InvalidFormatException) ex.getCause();
@@ -79,17 +72,17 @@ public class GlobalExceptionHandler {
 
             // Rol hataları için kontrol
             if (fieldName.equals("roles")) {
-                errorResponse.setErrorMessage("Geçersiz Rol Değeri");
-                errorResponse.setDetails("Girdiğiniz rol değeri geçersiz."); // + Arrays.toString(MemberRole.values()));
+                errorResponse.setErrorMessage("Invalid Role Value");
+                errorResponse.setDetails("The role value you entered is invalid"); // + Arrays.toString(MemberRole.values()));
             }
             // Kategori hataları için kontrol
             else if (fieldName.equals("bookCategory")) {
-                errorResponse.setErrorMessage("Geçersiz Kategori Değeri");
-                errorResponse.setDetails("Girdiğiniz kategori değeri geçersiz."); // + Arrays.toString(BookCategory.values()));
+                errorResponse.setErrorMessage("Invalid Category Value");
+                errorResponse.setDetails("The category value you entered is invalid"); // + Arrays.toString(BookCategory.values()));
             }
         } else {
-            errorResponse.setErrorMessage("Hata Oluştu");
-            errorResponse.setDetails("Geçersiz JSON formatı");
+            errorResponse.setErrorMessage("An error occurred");
+                errorResponse.setDetails("Invalid JSON format");
         }
 
         errorResponse.setTimestamp(LocalDateTime.now());

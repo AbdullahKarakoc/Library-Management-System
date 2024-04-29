@@ -21,7 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "members")
-@SQLDelete(sql = "UPDATE ourusers SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE members SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class MemberModel {
 

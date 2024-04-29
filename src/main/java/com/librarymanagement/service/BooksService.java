@@ -92,7 +92,7 @@ public class BooksService {
         BooksModel book = repository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
         repository.save(book);
         repository.deleteById(id);
-        return " !!! Kitap Bilgileri Silindi || silinen id: " + id;
+        return " !!! Book Information Deleted || deleted id: " + id;
 
     }
 

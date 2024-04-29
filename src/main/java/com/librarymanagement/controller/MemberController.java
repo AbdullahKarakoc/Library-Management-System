@@ -47,7 +47,7 @@ public class MemberController {
     @PostMapping("/users")
     public ResponseEntity<String> addUser(@Valid @RequestBody MemberRequestDto userDto) {
         MemberRequestDto savedUser = memberService.saveUser(userDto);
-        return ResponseEntity.ok("Kullanıcı başarıyla eklendi");
+        return ResponseEntity.ok("User successfully added");
     }
 
 
@@ -83,7 +83,7 @@ public class MemberController {
     @PutMapping("/users/{userId}")
     public ResponseEntity<String>  updateUser(@PathVariable UUID userId, @Valid @RequestBody MemberRequestDto updatedUserDto) {
         MemberRequestDto updatedUser = memberService.updateUser(userId, updatedUserDto);
-        return ResponseEntity.ok("Kullanıcı başarıyla güncellendi");
+        return ResponseEntity.ok("User successfully updated");
     }
 
 
@@ -94,7 +94,7 @@ public class MemberController {
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID userId) {
         memberService.deleteUser(userId);
-        return ResponseEntity.ok("Kullanıcı başarıyla silindi");
+        return ResponseEntity.ok("User successfully deleted");
     }
 
 

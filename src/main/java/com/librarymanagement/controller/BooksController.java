@@ -44,7 +44,7 @@ public class BooksController {
     @PostMapping("/books")
     public ResponseEntity<String> addBooks(@Valid @RequestBody BooksRequestDto booksDto){
         BooksRequestDto savedBook = service.saveBook(booksDto);
-        return ResponseEntity.ok("Kitap başarıyla eklendi");
+        return ResponseEntity.ok("Book Successfully added");
     }
 
 
@@ -92,13 +92,6 @@ public class BooksController {
         return ResponseEntity.ok(book);
     }
 
-/*
-    @PutMapping("/books/trade")
-    public void updateBook(@RequestBody BooksRequestDto book){
-        //TODO -> kitap kiralama, satma, kiralanmış kitabı geri getirme
-    }
-
- */
 
 
     @Operation(
@@ -112,7 +105,7 @@ public class BooksController {
     @PutMapping("/books/{id}")
     public ResponseEntity<String> updateBook(@PathVariable UUID id, @RequestBody BooksRequestDto booksDto){
         BooksResponseDto updatedBook = service.updateBook(id, booksDto);
-        return ResponseEntity.ok("Kitap başarıyla güncellendi");
+        return ResponseEntity.ok("Book Successfully updated");
     }
 
 
@@ -127,7 +120,7 @@ public class BooksController {
     @DeleteMapping("/books/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable UUID id){
         String result = service.deleteBook(id);
-        return ResponseEntity.ok("Kitap başarıyla silindi");
+        return ResponseEntity.ok("Book Successfully deleted");
     }
 
 

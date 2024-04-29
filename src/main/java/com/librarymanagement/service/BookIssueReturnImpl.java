@@ -33,7 +33,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
      * This Method generate exception if book not available in library with Book Name
      * This Methode generate exception if book already issued
      * This Method generate exception id number of books per user is more than 5.
-     * */
+     */
 
     @Override
     public LocalDate issueBook(String bookName, UUID userId) {
@@ -74,12 +74,12 @@ public class BookIssueReturnImpl implements BookIssueReturn {
      * This Method generate fine according to number of days more than the due date of book
      * This Method generate exception if User not exist with their userID
      * This Method generate exception if book not available in library with Book Id not present in User Account
-     * */
+     */
 
     @Override
     public Integer returnBook(UUID userId, UUID bookId) {
 
-        Integer fineAmount = 0;
+        Integer fineAmount = 0; // gecikme ücreti
         Integer fine = 10;
 
         userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
