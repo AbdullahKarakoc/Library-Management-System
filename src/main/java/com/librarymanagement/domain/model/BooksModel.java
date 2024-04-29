@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
+import java.time.LocalDate;
 
 import java.util.Date;
 import java.util.UUID;
@@ -32,7 +33,9 @@ public class BooksModel {
     private BookStatus bookStatus;
     private boolean deleted = Boolean.FALSE;
 
-
+    private LocalDate bookIssueDate;
+    private LocalDate bookReturnDate;
+    private boolean isIssued = false;
 
 
     @JsonManagedReference
@@ -45,4 +48,6 @@ public class BooksModel {
     @JoinColumn(name = "publishers_id")
     private PublishersModel publishers;
 
+    @ManyToOne
+    private MemberModel user;
 }

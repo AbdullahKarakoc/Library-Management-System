@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
@@ -102,5 +103,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body("Error: " + ex.getMessage());
     }
 
+
+
+
+    @ExceptionHandler(BookException.class)
+    public ResponseEntity<MyErrorDetails> bookExceptionHandler(BookException be , WebRequest wb){
+
+        MyErrorDetails med = new MyErrorDetails();
+
+        med.setTimestamp(LocalDateTime.now());
+        med.setMessage(be.getMessage());
+        med.setDetails(wb.getDescription(false));
+        return new ResponseEntity<MyErrorDetails>(med, HttpStatus.BAD_REQUEST);
+    }
 
 }

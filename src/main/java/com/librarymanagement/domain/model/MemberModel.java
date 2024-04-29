@@ -1,5 +1,6 @@
 package com.librarymanagement.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.librarymanagement.enums.MemberRole;
 import com.librarymanagement.enums.MemberStatus;
 import jakarta.persistence.*;
@@ -11,13 +12,15 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ourusers")
+@Table(name = "members")
 @SQLDelete(sql = "UPDATE ourusers SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class MemberModel {
@@ -33,5 +36,10 @@ public class MemberModel {
     private MemberRole roles;
     private MemberStatus userStatus;
     private boolean deleted = Boolean.FALSE;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user" )
+    private List<BooksModel> bookList = new ArrayList<>();
+
 
 }

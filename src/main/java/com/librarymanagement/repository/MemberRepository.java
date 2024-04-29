@@ -8,8 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface MemberRepository extends JpaRepository<MemberModel, UUID> {
-    @Query(value = "select * from ourusers where email = ?1", nativeQuery = true)
+    @Query(value = "select * from members where email = ?1", nativeQuery = true)
     Optional<MemberModel> findByEmail(String email);
+    Optional<MemberModel> findById(UUID id);
     boolean existsByEmail(String email);
 
 }

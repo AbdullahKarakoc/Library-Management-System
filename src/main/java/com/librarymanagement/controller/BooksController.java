@@ -3,15 +3,18 @@ package com.librarymanagement.controller;
 import com.librarymanagement.component.SwaggerAnnotations;
 import com.librarymanagement.domain.request.BooksRequestDto;
 import com.librarymanagement.domain.response.BooksResponseDto;
+import com.librarymanagement.service.BookIssueReturnImpl;
 import com.librarymanagement.service.BooksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +26,12 @@ public class BooksController {
     private BooksService service;
     @Autowired
     private SwaggerAnnotations swaggerAnnotations;
+
+    @Autowired
+    BookIssueReturnImpl bookIssueReturnImpl;
+
+
+
 
     @Operation(
             summary = "Adds a new book",
@@ -120,6 +129,38 @@ public class BooksController {
         String result = service.deleteBook(id);
         return ResponseEntity.ok("Kitap başarıyla silindi");
     }
+
+
+
+
+    @PostMapping("/bookIssue/{userId}")
+    public ResponseEntity<LocalDate> bookIssueControlHandler(
+            @PathVariable("userId") UUID userId,
+            @RequestParam String bookName){
+
+        LocalDate date = bookIssueReturnImpl.issueBook(bookName, userId);
+
+        return new ResponseEntity<LocalDate>(date, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/bookReturn/{userId}/{bookId}")
+    public ResponseEntity<Integer> bookReturnControlHandler(
+            @PathVariable("userId") UUID userId,
+            @PathVariable("bookId") UUID bookId){
+
+        Integer Response = bookIssueReturnImpl.returnBook( userId, bookId);
+
+        return new ResponseEntity<Integer>(Response, HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
 
 
 }
