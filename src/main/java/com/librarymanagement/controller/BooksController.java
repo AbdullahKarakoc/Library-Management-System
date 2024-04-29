@@ -125,7 +125,14 @@ public class BooksController {
 
 
 
-
+    @Operation(
+            summary = "Issues a book to a user",
+            description = "Issues a book to a user identified by their ID.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful"),
+                    @ApiResponse(responseCode = "404", description = "User or book not found")
+            }
+    )
     @PostMapping("/bookIssue/{userId}")
     public ResponseEntity<LocalDate> bookIssueControlHandler(
             @PathVariable("userId") UUID userId,
@@ -137,6 +144,14 @@ public class BooksController {
     }
 
 
+    @Operation(
+            summary = "Returns a book",
+            description = "Returns a book issued by a user.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful"),
+                    @ApiResponse(responseCode = "404", description = "User or book not found")
+            }
+    )
     @PostMapping("/bookReturn/{userId}/{bookId}")
     public ResponseEntity<Integer> bookReturnControlHandler(
             @PathVariable("userId") UUID userId,
