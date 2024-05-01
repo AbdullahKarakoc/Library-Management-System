@@ -21,6 +21,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,11 +39,6 @@ public class BooksService {
 
 
     public void saveBook(BooksRequestDto bookDto) {
-        if (bookRepository.existsByName(bookDto.getName())) {
-            throw new UserAlreadyExistsException("Book already exists.");
-        }
-
-
         Authors author = authorRepository.save(modelMapper.map(bookDto.getAuthors(), Authors.class));
         Publishers publisher = publisherRepository.save(modelMapper.map(bookDto.getPublishers(), Publishers.class));
 
@@ -67,18 +63,20 @@ public class BooksService {
        return modelMapper.map(books, BooksResponseDto.class);
     }
 
-    public BooksResponseDto getBookByName(String name) {
-        Books books = bookRepository.findByName(name).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
-        return modelMapper.map(books, BooksResponseDto.class);
+    public List<BooksResponseDto> getBookByName(String name) {
+        List<Books> booksList = bookRepository.findByName(name);
+
+        if (booksList.isEmpty()) {
+            throw new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue());
+        }
+
+        return booksList.stream()
+                .map(books -> modelMapper.map(books, BooksResponseDto.class)).toList();
     }
 
 
     public BooksResponseDto updateBook(UUID id, BooksRequestDto booksDto) {
         Books optionalBooks = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
-
-        if (bookRepository.existsByName(booksDto.getName())) {
-            throw new UserAlreadyExistsException("Book name already exists.");
-        }
 
             Books existingBook = optionalBooks;
             existingBook.setName(booksDto.getName());

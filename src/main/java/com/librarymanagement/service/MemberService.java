@@ -78,6 +78,10 @@ public class MemberService {
     public MemberRequestDto updateUser(UUID userId, MemberRequestDto updatedUserDto) {
         Members existingUser = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
 
+        if (memberRepository.existsByEmail(updatedUserDto.getEmail())) {
+            throw new UserAlreadyExistsException("Email already exists. Please choose a different email address.");
+        }
+
         existingUser.setName(updatedUserDto.getName());
         existingUser.setSurname(updatedUserDto.getSurname());
         //existingUser.setEmail(updatedUserDto.getEmail()); email bilgileri güncellenemez
