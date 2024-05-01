@@ -4,6 +4,7 @@ import com.librarymanagement.enums.MemberRole;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -15,6 +16,8 @@ public class MemberResponseDto {
     private String phone;
     private String email;
     private MemberRole roles;
+    private LocalDateTime createDate;
+    private LocalDateTime lastModified;
 
 }
 

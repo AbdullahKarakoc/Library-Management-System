@@ -10,8 +10,15 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,6 +26,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "books")
 @SQLDelete(sql = "UPDATE books SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
@@ -37,7 +45,6 @@ public class Books {
     private LocalDate bookReturnDate;
     private boolean isIssued = false;
 
-
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "authors_id")
@@ -50,4 +57,28 @@ public class Books {
 
     @ManyToOne
     private Members receiver;
+
+
+    @CreatedDate
+    @Column(
+            nullable = false,
+            updatable = false
+    )
+    private LocalDateTime createDate;
+
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime lastModified;
+
+    @CreatedBy
+    @Column(
+            nullable = false,
+            updatable = false
+    )
+    private String createBy;
+
+    @LastModifiedBy
+    @Column(insertable = false)
+    private String lastModifiedBy;
+
 }
