@@ -1,7 +1,7 @@
 package com.librarymanagement.service;
 
-import com.librarymanagement.domain.model.BooksModel;
-import com.librarymanagement.domain.model.MemberModel;
+import com.librarymanagement.domain.model.Books;
+import com.librarymanagement.domain.model.Members;
 import com.librarymanagement.enums.BookStatus;
 import com.librarymanagement.exception.BookException;
 import com.librarymanagement.exception.DataNotFoundException;
@@ -43,12 +43,12 @@ public class BookIssueReturnImpl implements BookIssueReturn {
 
         bookRepository.findByName(bookName).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
-        MemberModel user = userRepository.findById(userId).get();
+        Members member = userRepository.findById(userId).get();
 
-        List<BooksModel> booklist =  user.getBookList();
+        List<Books> booklist =  member.getBookList();
 
         if(booklist.size()<=5) {
-            BooksModel book = bookRepository.findByName(bookName).get();
+            Books book = bookRepository.findByName(bookName).get();
 
             if(book.isIssued()==true) {
                 throw new BookException("Book already issue please issue other book");
@@ -57,11 +57,11 @@ public class BookIssueReturnImpl implements BookIssueReturn {
             book.setIssued(true);
             book.setBookIssueDate(LocalDate.now());
             book.setBookReturnDate(LocalDate.now().plusDays(10));
-            book.setMembers(user);
+            book.setReceiver(member);
             book.setBookStatus(BookStatus.KIRALANDI);
-            user.getBookList().add(book);
+            member.getBookList().add(book);
             bookRepository.save(book);
-            userRepository.save(user);
+            userRepository.save(member);
         }
         else
         {
@@ -87,16 +87,16 @@ public class BookIssueReturnImpl implements BookIssueReturn {
         userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
         bookRepository.findById(bookId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
-        MemberModel user = userRepository.findById(userId).get();
-        List<BooksModel> bookList =  user.getBookList();
-        BooksModel bookReturn = bookRepository.findById(bookId).get();
-        Iterator<BooksModel> iterator = bookList.iterator();
+        Members user = userRepository.findById(userId).get();
+        List<Books> bookList =  user.getBookList();
+        Books bookReturn = bookRepository.findById(bookId).get();
+        Iterator<Books> iterator = bookList.iterator();
 
         boolean flag = false;
 
         while(iterator.hasNext()) {
 
-            BooksModel bookItr = iterator.next();
+            Books bookItr = iterator.next();
 
             if(bookReturn.getId() == bookItr.getId()) {
                 flag = true;
@@ -115,7 +115,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
             userRepository.save(user);
             bookReturn.setBookReturnDate(null);
             bookReturn.setBookIssueDate(null);
-            bookReturn.setMembers(null);
+            bookReturn.setReceiver(null);
             bookReturn.setIssued(false);
             bookReturn.setBookStatus(BookStatus.KUTUPHANEDE);
             bookRepository.save(bookReturn);

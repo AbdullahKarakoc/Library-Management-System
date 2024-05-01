@@ -105,14 +105,14 @@ roles: (ADMIN|USER) is required
 
 
 ## Member
-| HTTP Method | Endpoint        | Description                                         | Yetki              |
-|-------------|-----------------|-----------------------------------------------------| ------------------ |
-| GET         | /api/users      | Tüm kullanıcıları bilgilerini çeker                 | ADMIN              |
-| GET         | /api/users/me   | İstek atan kullancı bilgisini çeker                 | ADMIN & USER       |
-| POST        | /api/users      | Yeni kullanıcı oluşturur                            | ADMIN & USER       |
-| PUT         | /api/users/{id} | Id'e göre kullanıcıyı günceller(Mail ve Role hariç) | ADMIN & USER       |
-| DELETE      | /api/users/{id} | Id'e göre kullanıcıyı siler                         | ADMIN & USER       |
-</br></br></br>
+| HTTP Method | Endpoint        | Description                                         | Yetki               |
+|-------------|-----------------|-----------------------------------------------------|---------------------|
+| GET         | /api/users      | Tüm kullanıcıları bilgilerini çeker                 | ADMIN               |
+| GET         | /api/users/me   | İstek atan kullancı bilgisini çeker                 | ADMIN & USER        |
+| POST        | /api/users      | Yeni kullanıcı oluşturur                            | ADMIN & USER        |
+| PUT         | /api/users/{id} | Id'e göre kullanıcıyı günceller(Mail ve Role hariç) | ADMIN & USER        |
+| DELETE      | /api/users/{id  | Id'e göre kullanıcıyı siler                         | ADMIN & USER        |
+
 
 ## 5. TEST
 ### Book

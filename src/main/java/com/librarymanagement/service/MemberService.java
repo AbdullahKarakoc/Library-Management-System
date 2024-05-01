@@ -1,6 +1,6 @@
 package com.librarymanagement.service;
 
-import com.librarymanagement.domain.model.MemberModel;
+import com.librarymanagement.domain.model.Members;
 import com.librarymanagement.domain.request.MemberRequestDto;
 import com.librarymanagement.domain.response.MemberResponseDto;
 import com.librarymanagement.enums.MemberStatus;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Data
 public class MemberService {
 
-    private final MemberRepository ourUserRepo;
+    private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -38,29 +38,29 @@ public class MemberService {
 
 
     public MemberRequestDto saveUser(MemberRequestDto userDto){
-        if (ourUserRepo.existsByEmail(userDto.getEmail())) {
+        if (memberRepository.existsByEmail(userDto.getEmail())) {
             throw new UserAlreadyExistsException("Email already exists. Please choose a different email address.");
         }
 
-        MemberModel user = modelMapper.map(userDto, MemberModel.class);
+        Members user = modelMapper.map(userDto, Members.class);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setUserStatus(MemberStatus.ACTIVE);
 
-        MemberModel savedUser = ourUserRepo.save(user);
+        Members savedUser = memberRepository.save(user);
         return modelMapper.map(savedUser, MemberRequestDto.class);
 
     }
 
 
     public List<MemberResponseDto> getUsers() {
-        List<MemberModel> users = ourUserRepo.findAll();
+        List<Members> users = memberRepository.findAll();
         List<MemberResponseDto> dtos = users.stream().map(MemberModel -> modelMapper.map(MemberModel, MemberResponseDto.class)).collect(Collectors.toList());
         return dtos;
     }
 
 
     public MemberResponseDto getUser() {
-        Optional<MemberModel> user = ourUserRepo.findByEmail(getLoggedInUserDetails().getUsername());
+        Optional<Members> user = memberRepository.findByEmail(getLoggedInUserDetails().getUsername());
         MemberResponseDto dto = modelMapper.map(user, MemberResponseDto.class);
         return dto;
     }
@@ -76,7 +76,7 @@ public class MemberService {
 
 
     public MemberRequestDto updateUser(UUID userId, MemberRequestDto updatedUserDto) {
-        MemberModel existingUser = ourUserRepo.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
+        Members existingUser = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
 
         existingUser.setName(updatedUserDto.getName());
         existingUser.setSurname(updatedUserDto.getSurname());
@@ -85,15 +85,15 @@ public class MemberService {
         existingUser.setPassword(passwordEncoder.encode(updatedUserDto.getPassword()));
         existingUser.setPhone(updatedUserDto.getPhone());
 
-        MemberModel savedUser = ourUserRepo.save(existingUser);
+        Members savedUser = memberRepository.save(existingUser);
         return modelMapper.map(savedUser, MemberRequestDto.class);
     }
 
     public void deleteUser(UUID userId) {
-        MemberModel userToDelete = ourUserRepo.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
+        Members userToDelete = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
         userToDelete.setUserStatus(MemberStatus.INACTIVE);
-        ourUserRepo.save(userToDelete);
-        ourUserRepo.deleteById(userId);
+        memberRepository.save(userToDelete);
+        memberRepository.deleteById(userId);
 
 
     }

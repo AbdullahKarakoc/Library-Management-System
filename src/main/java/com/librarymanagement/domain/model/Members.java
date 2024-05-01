@@ -23,7 +23,7 @@ import java.util.UUID;
 @Table(name = "members")
 @SQLDelete(sql = "UPDATE members SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-public class MemberModel {
+public class Members {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
@@ -38,8 +38,8 @@ public class MemberModel {
     private boolean deleted = Boolean.FALSE;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "members" )
-    private List<BooksModel> bookList = new ArrayList<>();
+    @OneToMany(mappedBy = "receiver" )
+    private List<Books> bookList = new ArrayList<>();
 
 
 }

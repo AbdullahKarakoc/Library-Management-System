@@ -2,6 +2,7 @@ package com.librarymanagement.domain.request;
 
 import com.librarymanagement.enums.BookCategory;
 import com.librarymanagement.util.validator.ValidCategory;
+import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.Valid;
@@ -15,6 +16,7 @@ import java.util.Date;
 public class BooksRequestDto {
 
     @NotBlank(message = "book name is required")
+    @Column(unique = true)
     @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Book's name must be only character") // sadece harf olabilir, sayı ve özel karakter olamaz
     @Size(min = 1, max = 50, message = "Book's name length must be between 1 and 50 characters")
     private String name;

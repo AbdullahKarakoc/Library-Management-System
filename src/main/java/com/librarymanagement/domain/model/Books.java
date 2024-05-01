@@ -22,7 +22,7 @@ import java.util.UUID;
 @Table(name = "books")
 @SQLDelete(sql = "UPDATE books SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-public class BooksModel {
+public class Books {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
@@ -41,13 +41,13 @@ public class BooksModel {
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "authors_id")
-    private AuthorsModel authors;
+    private Authors authors;
 
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "publishers_id")
-    private PublishersModel publishers;
+    private Publishers publishers;
 
     @ManyToOne
-    private MemberModel members;
+    private Members receiver;
 }

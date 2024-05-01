@@ -1,6 +1,6 @@
 package com.librarymanagement.config.security;
 
-import com.librarymanagement.domain.model.MemberModel;
+import com.librarymanagement.domain.model.Members;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +15,10 @@ public class OurUserInfoDetails implements UserDetails {
     private String password;
     private List<GrantedAuthority> roles;
 
-    public OurUserInfoDetails(MemberModel memberModel){
-        this.email = memberModel.getEmail();
-        this.password = memberModel.getPassword();
-        this.roles = Stream.of(memberModel.getRoles())
+    public OurUserInfoDetails(Members members){
+        this.email = members.getEmail();
+        this.password = members.getPassword();
+        this.roles = Stream.of(members.getRoles())
                 .map(Enum::name) // Assuming getRoles() returns an array of enums
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

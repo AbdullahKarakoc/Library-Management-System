@@ -43,7 +43,7 @@ public class BooksController {
     )
     @PostMapping("/books")
     public ResponseEntity<String> addBooks(@Valid @RequestBody BooksRequestDto booksDto){
-        BooksRequestDto savedBook = service.saveBook(booksDto);
+        service.saveBook(booksDto);
         return ResponseEntity.ok("Book Successfully added");
     }
 
@@ -71,13 +71,13 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "Book not found")
             }
     )
-    @GetMapping("/booksById/{id}")
+    @GetMapping("/books/{id}")
     public ResponseEntity<BooksResponseDto> findBookById(@PathVariable UUID id){
         BooksResponseDto book = service.getBookById(id);
         return ResponseEntity.ok(book);
     }
 
-
+// queryDSL - SearchFilter research
     @Operation(
             summary = "Searches for a book by name",
             description = "Searches for a specific book by its name.",
