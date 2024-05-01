@@ -3,7 +3,8 @@ package com.librarymanagement.enums;
 public enum BookStatus {
     BORROWED("BORROWED"),
     SOLD("SOLD"),
-    IN_LIBRARY("IN_LIBRARY");
+    IN_LIBRARY("IN_LIBRARY"),
+    DELETED("DELETED");
 
     private final String value;
 

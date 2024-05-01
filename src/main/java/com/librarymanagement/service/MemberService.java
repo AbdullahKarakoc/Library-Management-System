@@ -44,7 +44,7 @@ public class MemberService {
 
         Members user = modelMapper.map(userDto, Members.class);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setUserStatus(MemberStatus.ACTIVE);
+        user.setMemberStatus(MemberStatus.ACTIVE);
 
         Members savedUser = memberRepository.save(user);
         return modelMapper.map(savedUser, MemberRequestDto.class);
@@ -90,9 +90,14 @@ public class MemberService {
     }
 
     public void deleteUser(UUID userId) {
-        Members userToDelete = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
-        userToDelete.setUserStatus(MemberStatus.INACTIVE);
-        memberRepository.save(userToDelete);
+        Members member = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
+
+        if (!member.getBookList().isEmpty()) {
+            throw new UnsupportedOperationException("User has borrowed books. Cannot delete user.");
+        }
+
+        member.setMemberStatus(MemberStatus.INACTIVE);
+        memberRepository.save(member);
         memberRepository.deleteById(userId);
 
 

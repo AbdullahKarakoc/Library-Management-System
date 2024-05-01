@@ -110,4 +110,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<MyErrorDetails>(med, HttpStatus.BAD_REQUEST);
     }
 
+
+
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<String> handleUnsupportedOperationException(UnsupportedOperationException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
 }

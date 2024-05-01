@@ -5,6 +5,7 @@ import com.librarymanagement.domain.request.BooksRequestDto;
 import com.librarymanagement.domain.response.BooksResponseDto;
 import com.librarymanagement.enums.BookCategory;
 import com.librarymanagement.enums.BookStatus;
+import com.librarymanagement.enums.MemberStatus;
 import com.librarymanagement.exception.DataNotFoundException;
 import com.librarymanagement.domain.model.Authors;
 import com.librarymanagement.domain.model.Books;
@@ -99,9 +100,16 @@ public class BooksService {
     public String deleteBook(UUID id) {
 
         Books book = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
+        // Kitabın durumunu kontrol et
+        if (book.getBookStatus() == BookStatus.BORROWED) {
+            throw new UnsupportedOperationException("Cannot delete a book that is borrowed.");
+        }
+
+        book.setBookStatus(BookStatus.DELETED);
         bookRepository.save(book);
         bookRepository.deleteById(id);
-        return " !!! Book Information Deleted || deleted id: " + id;
+
+        return " !!! Book Information Deleted: ";
 
     }
 

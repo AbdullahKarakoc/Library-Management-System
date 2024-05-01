@@ -34,7 +34,7 @@ public class Members {
     private String email;
     private String password;
     private MemberRole roles;
-    private MemberStatus userStatus;
+    private MemberStatus memberStatus;
     private boolean deleted = Boolean.FALSE;
 
     @JsonIgnore
