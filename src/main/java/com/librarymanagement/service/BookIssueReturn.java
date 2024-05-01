@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface BookIssueReturn {
 
-    public LocalDate issueBook(String bookName , UUID userId);
+    public LocalDate issueBook(UUID userId ,UUID bookId);
 
     public Integer returnBook( UUID userId ,UUID bookId);
 

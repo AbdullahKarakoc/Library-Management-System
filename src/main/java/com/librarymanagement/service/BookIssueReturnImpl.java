@@ -37,18 +37,18 @@ public class BookIssueReturnImpl implements BookIssueReturn {
      */
 
     @Override
-    public LocalDate issueBook(String bookName, UUID userId) {
+    public LocalDate issueBook(UUID userId, UUID bookId) {
 
         userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
 
-        bookRepository.findByName(bookName).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
+        bookRepository.findById(bookId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
         Members member = userRepository.findById(userId).get();
 
         List<Books> booklist =  member.getBookList();
 
         if(booklist.size()<=5) {
-            Books book = bookRepository.findByName(bookName).get();
+            Books book = bookRepository.findById(bookId).get();
 
             if(book.isIssued()==true) {
                 throw new BookException("Book already issue please issue other book");

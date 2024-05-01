@@ -133,12 +133,12 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "User or book not found")
             }
     )
-    @PutMapping("/issue/{userId}")
+    @PutMapping("/issue/{userId}/{bookId}")
     public ResponseEntity<LocalDate> bookIssueControlHandler(
             @PathVariable("userId") UUID userId,
-            @RequestParam String bookName){
+            @PathVariable("bookId") UUID bookId){
 
-        LocalDate date = bookIssueReturnImpl.issueBook(bookName, userId);
+        LocalDate date = bookIssueReturnImpl.issueBook(userId, bookId);
 
         return new ResponseEntity<LocalDate>(date, HttpStatus.OK);
     }
