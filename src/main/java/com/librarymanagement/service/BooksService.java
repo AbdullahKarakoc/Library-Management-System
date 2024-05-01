@@ -3,6 +3,7 @@ package com.librarymanagement.service;
 
 import com.librarymanagement.domain.request.BooksRequestDto;
 import com.librarymanagement.domain.response.BooksResponseDto;
+import com.librarymanagement.enums.BookCategory;
 import com.librarymanagement.enums.BookStatus;
 import com.librarymanagement.exception.DataNotFoundException;
 import com.librarymanagement.domain.model.Authors;
@@ -47,7 +48,7 @@ public class BooksService {
         Books book = modelMapper.map(bookDto, Books.class);
         book.setAuthors(author);
         book.setPublishers(publisher);
-        book.setBookStatus(BookStatus.KUTUPHANEDE);
+        book.setBookStatus(BookStatus.IN_LIBRARY);
 
         Books savedBook = bookRepository.save(book);
         modelMapper.map(savedBook, BooksRequestDto.class);
@@ -72,11 +73,11 @@ public class BooksService {
 
 
     public BooksResponseDto updateBook(UUID id, BooksRequestDto booksDto) {
+        Books optionalBooks = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
+
         if (bookRepository.existsByName(booksDto.getName())) {
             throw new UserAlreadyExistsException("Book name already exists.");
         }
-
-        Books optionalBooks = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
             Books existingBook = optionalBooks;
             existingBook.setName(booksDto.getName());

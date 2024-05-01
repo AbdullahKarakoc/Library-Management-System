@@ -58,7 +58,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
             book.setBookIssueDate(LocalDate.now());
             book.setBookReturnDate(LocalDate.now().plusDays(10));
             book.setReceiver(member);
-            book.setBookStatus(BookStatus.KIRALANDI);
+            book.setBookStatus(BookStatus.BORROWED);
             member.getBookList().add(book);
             bookRepository.save(book);
             userRepository.save(member);
@@ -117,7 +117,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
             bookReturn.setBookIssueDate(null);
             bookReturn.setReceiver(null);
             bookReturn.setIssued(false);
-            bookReturn.setBookStatus(BookStatus.KUTUPHANEDE);
+            bookReturn.setBookStatus(BookStatus.IN_LIBRARY);
             bookRepository.save(bookReturn);
         }
         else

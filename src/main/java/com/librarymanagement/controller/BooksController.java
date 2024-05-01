@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api")
+@RequestMapping("/api/books")
 @RestController
 @Tag(name = "Books-Controller", description = "Controller managing operations related to books")
 public class BooksController {
@@ -41,7 +41,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "403", description = "Unauthorized access")
             }
     )
-    @PostMapping("/books")
+    @PostMapping()
     public ResponseEntity<String> addBooks(@Valid @RequestBody BooksRequestDto booksDto){
         service.saveBook(booksDto);
         return ResponseEntity.ok("Book Successfully added");
@@ -56,7 +56,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "403", description = "Unauthorized access")
             }
     )
-    @GetMapping("/books")
+    @GetMapping()
     public ResponseEntity<List<BooksResponseDto>> findAllBooks(){
         List<BooksResponseDto> allBooks = service.getBooks();
         return ResponseEntity.ok(allBooks);
@@ -71,7 +71,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "Book not found")
             }
     )
-    @GetMapping("/books/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BooksResponseDto> findBookById(@PathVariable UUID id){
         BooksResponseDto book = service.getBookById(id);
         return ResponseEntity.ok(book);
@@ -86,9 +86,9 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "Book not found")
             }
     )
-    @GetMapping("/booksByName/{name}")
-    public ResponseEntity<BooksResponseDto> findBookByName(@PathVariable String name){
-        BooksResponseDto book = service.getBookByName(name);
+    @GetMapping("/search")
+    public ResponseEntity<BooksResponseDto> findBookByName(@RequestParam String bookName){
+        BooksResponseDto book = service.getBookByName(bookName);
         return ResponseEntity.ok(book);
     }
 
@@ -102,7 +102,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "Book not found")
             }
     )
-    @PutMapping("/books/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateBook(@PathVariable UUID id, @RequestBody BooksRequestDto booksDto){
         BooksResponseDto updatedBook = service.updateBook(id, booksDto);
         return ResponseEntity.ok("Book Successfully updated");
@@ -117,7 +117,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "Book not found")
             }
     )
-    @DeleteMapping("/books/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable UUID id){
         String result = service.deleteBook(id);
         return ResponseEntity.ok("Book Successfully deleted");
@@ -133,7 +133,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "User or book not found")
             }
     )
-    @PutMapping("/bookIssue/{userId}")
+    @PutMapping("/issue/{userId}")
     public ResponseEntity<LocalDate> bookIssueControlHandler(
             @PathVariable("userId") UUID userId,
             @RequestParam String bookName){
@@ -152,7 +152,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "User or book not found")
             }
     )
-    @PutMapping("/bookReturn/{userId}/{bookId}")
+    @PutMapping("/return/{userId}/{bookId}")
     public ResponseEntity<Integer> bookReturnControlHandler(
             @PathVariable("userId") UUID userId,
             @PathVariable("bookId") UUID bookId){

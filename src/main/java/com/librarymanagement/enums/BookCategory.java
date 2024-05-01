@@ -1,24 +1,23 @@
 package com.librarymanagement.enums;
 
 public enum BookCategory {
-    ROMAN("ROMAN"),
-    HIKAYE("HIKAYE"),
-    BILIM_KURGU("BILIM_KURGU"),
-    DRAM("DRAM"),
-    POLISIYE("POLISIYE"),
-    KORKU("KORKU"),
-    ASK("ASK"),
-    GERILIM("GERILIM"),
-    BIOGRAFI("BIOGRAFI"),
-    TARIH("TARIH"),
-    SEYAHAT("SEYAHAT"),
-    YEMEK_KITABI("YEMEK_KITABI"),
-    SANAT("SANAT"),
-    DIN("DIN"),
-    FELSEFE("FELSEFE"),
-    KENDINE_YARDIM("KENDINE_YARDIM"),
-    IS("IS"),
-    DIGER("DIGER");
+    NOVEL("NOVEL"),
+    STORY("STORY"),
+    SCIENCE("SCIENCE"),
+    DRAMA("DRAMA"),
+    DETECTIVE("DETECTIVE"),
+    HORROR("HORROR"),
+    ROMANCE("ROMANCE"),
+    THRILLER("THRILLER"),
+    BIOGRAPHY("BIOGRAPHY"),
+    HISTORY("HISTORY"),
+    TRAVEL("TRAVEL"),
+    COOKBOOK("COOKBOOK"),
+    ART("ART"),
+    RELIGION("RELIGION"),
+    PHILOSOPHY("PHILOSOPHY"),
+    BUSINESS("BUSINESS"),
+    OTHER("OTHER");
 
     private final String value;
 

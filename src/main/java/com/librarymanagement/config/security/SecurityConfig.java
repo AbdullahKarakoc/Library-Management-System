@@ -28,14 +28,14 @@ public class SecurityConfig {
 //        List<MemberRole> updateRoles = [];
 //        List<MemberRole> readRoles = [];
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/","/swagger-ui/index.html").permitAll()
+                        .requestMatchers("/api/books/","/swagger-ui/index.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/books").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/books").hasAnyAuthority("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.GET, "/api/booksById/{id}").hasAnyAuthority("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.GET, "/api/booksByName/{name}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/books/{id}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/books/search").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT, "/api/books/{id}").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/bookIssue/{userId}").hasAnyAuthority("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.PUT, "/api/bookReturn/{userId}/{bookId}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/books/issue/{userId}").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/books/return/{userId}/{bookId}").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers(HttpMethod.DELETE, "/api/books/{id}").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users").hasAnyAuthority("ADMIN")
