@@ -6,6 +6,6 @@ import lombok.Data;
 public class PublishersResponseDto {
 
     private String name;
-    private String address;
+    private String country;
 
 }

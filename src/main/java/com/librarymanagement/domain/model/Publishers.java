@@ -21,7 +21,7 @@ public class Publishers {
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     private UUID id;
     private String name;
-    private String address;
+    private String country;
 
     @JsonBackReference
     @OneToMany(mappedBy = "publishers",cascade = CascadeType.ALL)

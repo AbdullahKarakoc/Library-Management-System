@@ -10,15 +10,21 @@
 * Kitap eklemek silmek ve düzenlemek için ADMIN hesabı oluşturulmalı.
 * Kullanıcılar ve Adminler İd ve isime göre kitap arama yapabilir.
 * Adminler kitap ekleyebilir silebilir ve güncelleyebilirler.
+* Kullanıcı ve kitap id'leri ile kitap kiralama ve iade işlemleri yapılabilir.
 * Kullanıcı aynı anda en fazla 5 kitap kiralayabilir.
 * Kullanıcı kiraladığı kitapları 10 gün içinde iade etmezse hergün için gecikme ücreti öder.
+* Kitaplar üzerinde yapılan değişiklerin tarih ve kim tarafından yapıldığı bilgileri tutulur.
+
+
+
   </br>
 
 ### 1.3 Model
 >**Book:** </br>
 name: (min:1, max:50) is required/only characters</br> 
 release: (min:1, max:2024) is required/only number</br> 
-category: (min:5, max:20) is required/only characters</br></br>
+category: (min:5, max:20) is required/only characters</br>
+
 
 >**Author:** </br> 
 name: (min:10, max:40) is required/only characters</br>
@@ -27,7 +33,7 @@ birthdate: (Birthdate must be in the past) is required/only number</br>
 
 >**Publisher:** </br>
 name: (min:2, max:30) is required/only characters</br>
-address: is required/only characters or number
+country: is required/only characters
 
 >**Member:** </br>
 name: (min:1, max:50) is required/only characters</br>
@@ -37,10 +43,7 @@ email: Must be email type</br>
 password: 1 büyük, 1 küçük, 1 özel karakter ve 8-20 arası boyut </br> 
 roles: (ADMIN|USER) is required
 
-
-
-
-  </br></br></br>
+</br></br></br>
 ## 2. YAPI
 ### 2.1 Mimari
 > **REST** mimarisi uygulandı
@@ -75,6 +78,7 @@ roles: (ADMIN|USER) is required
   </br>
 ### 3.2 Kütüphane ve Bağımlılıklar
 * Spring Boot Data Jpa
+* Auditing
 * Hibernate
 * Spring Boot Security
 * Lombok
@@ -89,16 +93,16 @@ roles: (ADMIN|USER) is required
 
 ### 4. ENDPOİNT
 ## Book
-| HTTP Method | Endpoint                      | Açıklama                                             | Yetki        |
-|-------------|-------------------------------|------------------------------------------------------|--------------|
-| GET         | /api/books                    | Tüm kitapları çeker                                  | ADMIN & USER |
-| GET         | /api/booksById/{id}           | Id'e göre kitap çeker                                | ADMIN & USER |
-| GET         | /api/booksByName/{name}       | Name'e göre kitap çeker                              | ADMIN & USER |
-| POST        | /api/books                    | Yeni kitap oluşturur                                 | ADMIN        |
-| PUT         | /api/books/{id}               | Id'e göre varolan kitabı günceller                   | ADMIN        |
-| DELETE      | /api/books/{id}               | Id'e göre kitabı siler                               | ADMIN        |
-| PUT         | /api/bookIssue/{userId}       | User Id'e göre kitap kiralar/Request param(bookName) | ADMIN & USER |
-| PUT         | /bookReturn/{userId}/{bookId} | User Id ve Book Id ile kitap iade eder               | ADMIN & USER |
+| HTTP Method | Endpoint                          | Açıklama                                        | Yetki        |
+|-------------|-----------------------------------|-------------------------------------------------|--------------|
+| GET         | /api/books                        | Tüm kitapları çeker                             | ADMIN & USER |
+| GET         | /api/books/{id}                   | Id'e göre kitap çeker                           | ADMIN & USER |
+| GET         | /api/search                       | Name'e göre kitap çeker/Request param(bookName) | ADMIN & USER |
+| POST        | /api/books                        | Yeni kitap oluşturur                            | ADMIN        |
+| PUT         | /api/books/{id}                   | Id'e göre varolan kitabı günceller              | ADMIN        |
+| DELETE      | /api/books/{id}                   | Id'e göre kitabı siler                          | ADMIN        |
+| PUT         | /api/book/issue/{userId}/{bookId} | User Id ve Book Id ile kitap kiralar            | ADMIN & USER |
+| PUT         | api/book/return/{userId}/{bookId} | User Id ve Book Id ile kitap iade eder          | ADMIN & USER |
 
 
 
@@ -127,17 +131,17 @@ roles: (ADMIN|USER) is required
 },</br>
 "publishers": {</br>
 "name": "İş Bankası Kültür Yayınları",</br>
-"address": "no:78/4 Yeni mahalle Çankaya Ankara/Turkey"</br>
+"country": "Turkey"</br>
 }
 }
 
 ### User
 >{
-"name": "Nur",</br>
+"name": "Ali",</br>
 "surname": "Çınar",</br>
 "phone":"+905423351265",</br>
-"email":"nur@gmail.com",</br>
-"password":"Nur1453*",</br>
+"email":"ali@gmail.com",</br>
+"password":"Ali1453*",</br>
 "roles":"USER"</br>
 }
 </br></br></br>
