@@ -134,13 +134,14 @@ public class BooksController {
             }
     )
     @PutMapping("/issue/{userId}/{bookId}")
-    public ResponseEntity<LocalDate> bookIssueControlHandler(
+    public ResponseEntity<String> bookIssueControlHandler(
             @PathVariable("userId") UUID userId,
             @PathVariable("bookId") UUID bookId){
 
         LocalDate date = bookIssueReturnImpl.issueBook(userId, bookId);
+        String responseMessage = "Book deadline: " + date.toString();
 
-        return new ResponseEntity<LocalDate>(date, HttpStatus.OK);
+        return new ResponseEntity<String>(responseMessage, HttpStatus.OK);
     }
 
 
@@ -153,13 +154,14 @@ public class BooksController {
             }
     )
     @PutMapping("/return/{userId}/{bookId}")
-    public ResponseEntity<Integer> bookReturnControlHandler(
+    public ResponseEntity<String> bookReturnControlHandler(
             @PathVariable("userId") UUID userId,
             @PathVariable("bookId") UUID bookId){
 
-        Integer Response = bookIssueReturnImpl.returnBook( userId, bookId);
+        Integer response = bookIssueReturnImpl.returnBook( userId, bookId);
+        String responseMessage = "Fine amount: " + response.toString();
 
-        return new ResponseEntity<Integer>(Response, HttpStatus.OK);
+        return new ResponseEntity<String>(responseMessage, HttpStatus.OK);
     }
 
 
