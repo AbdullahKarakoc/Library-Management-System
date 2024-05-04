@@ -76,7 +76,7 @@ public class MemberService {
 
 
     public MemberRequestDto updateUser(UUID userId, MemberRequestDto updatedUserDto) {
-        Members existingUser = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
+        Members existingUser = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
 
         if (memberRepository.existsByEmail(updatedUserDto.getEmail())) {
             throw new UserAlreadyExistsException("Email already exists. Please choose a different email address.");
@@ -94,7 +94,7 @@ public class MemberService {
     }
 
     public void deleteUser(UUID userId) {
-        Members member = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
+        Members member = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
 
         if (!member.getBookList().isEmpty()) {
             throw new UnsupportedOperationException("User has borrowed books. Cannot delete user.");

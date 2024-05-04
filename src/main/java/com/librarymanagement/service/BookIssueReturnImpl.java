@@ -39,7 +39,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
     @Override
     public LocalDate issueBook(UUID userId, UUID bookId) {
 
-        userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
+        userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
 
         bookRepository.findById(bookId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
@@ -84,7 +84,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
         Integer fineAmount = 0; // gecikme ücreti
         Integer fine = 10;
 
-        userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.USER_NOT_FOUND.getValue()));
+        userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
         bookRepository.findById(bookId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
         Members user = userRepository.findById(userId).get();
