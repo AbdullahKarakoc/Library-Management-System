@@ -119,40 +119,46 @@ roles: (ADMIN|USER) is required
 
 ## 5. TEST
 ### Book
->{
-"name": "Suç ve Ceza",</br>
-"release": "1894-03-28",</br>
-"bookCategory": "DETECTIVE",</br>
-"authors": {</br>
-"name": "Fyodor Dostoyevski",</br>
-"surname": "Dostoyevski",</br>
-"birthdate": "1861-07-13"</br>
-},</br>
-"publishers": {</br>
-"name": "İş Bankası Kültür Yayınları",</br>
-"country": "Turkey"</br>
+
+```json
+{
+  "name": "Suç ve Ceza",
+  "release": "1894-03-28",
+  "bookCategory": "DETECTIVE",
+  "authors": {
+    "name": "Fyodor",
+    "surname": "Dostoyevski",
+    "birthdate": "1861-07-13"
+  },
+  "publishers": {
+    "name": "İş Bankası Kültür Yayınları",
+    "country": "Türkiye"
+  }
 }
-}
+```
 
 ### Member
 
->{
-"name": "Admin",</br>
-"surname": "admin",</br>
-"phone":"+905423351265",</br>
-"email":"admin@gmail.com",</br>
-"password":"Admin1453*",</br>
-"roles":"ADMIN"</br>
+```json
+{
+    "name": "Admin",
+    "surname": "admin",
+    "phone":"+905423351265",
+    "email":"admin@gmail.com",
+    "password":"Admin1453*",
+    "roles":"ADMIN"
 }
-
->{
-"name": "Ali",</br>
-"surname": "Çınar",</br>
-"phone":"+905423351265",</br>
-"email":"ali@gmail.com",</br>
-"password":"Ali1453*",</br>
-"roles":"USER"</br>
+```
+```json
+{
+    "name": "Abdullah",
+    "surname": "Karakoç",
+    "phone":"+905423351265",
+    "email":"abdullah@gmail.com",
+    "password":"Abdullah1453*",
+    "roles":"USER"
 }
+```
 
 </br></br></br>
 
