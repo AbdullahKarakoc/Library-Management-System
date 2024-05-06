@@ -93,16 +93,16 @@ roles: (ADMIN|USER) is required
 
 ### 4. ENDPOİNT
 ## Book
-| HTTP Method | Endpoint                          | Açıklama                                        | Yetki        |
-|-------------|-----------------------------------|-------------------------------------------------|--------------|
-| GET         | /api/books                        | Tüm kitapları çeker                             | ADMIN & USER |
-| GET         | /api/books/{id}                   | Id'e göre kitap çeker                           | ADMIN & USER |
-| GET         | /api/search                       | Name'e göre kitap çeker/Request param(bookName) | ADMIN & USER |
-| POST        | /api/books                        | Yeni kitap oluşturur                            | ADMIN        |
-| PUT         | /api/books/{id}                   | Id'e göre varolan kitabı günceller              | ADMIN        |
-| DELETE      | /api/books/{id}                   | Id'e göre kitabı siler                          | ADMIN        |
-| PUT         | /api/book/issue/{userId}/{bookId} | User Id ve Book Id ile kitap kiralar            | ADMIN & USER |
-| PUT         | api/book/return/{userId}/{bookId} | User Id ve Book Id ile kitap iade eder          | ADMIN & USER |
+| HTTP Method | Endpoint                            | Açıklama                                        | Yetki        |
+|-------------|-------------------------------------|-------------------------------------------------|--------------|
+| GET         | /api/books                          | Tüm kitapları çeker                             | ADMIN & USER |
+| GET         | /api/books/{id}                     | Id'e göre kitap çeker                           | ADMIN & USER |
+| GET         | /api/books/search                   | Name'e göre kitap çeker/Request param(bookName) | ADMIN & USER |
+| POST        | /api/books                          | Yeni kitap oluşturur                            | ADMIN        |
+| PUT         | /api/books/{id}                     | Id'e göre varolan kitabı günceller              | ADMIN        |
+| DELETE      | /api/books/{id}                     | Id'e göre kitabı siler                          | ADMIN        |
+| PUT         | /api/books/issue/{userId}/{bookId}  | User Id ve Book Id ile kitap kiralar            | ADMIN & USER |
+| PUT         | /api/books/return/{userId}/{bookId} | User Id ve Book Id ile kitap iade eder          | ADMIN & USER |
 
 
 
@@ -123,7 +123,7 @@ roles: (ADMIN|USER) is required
 >{
 "name": "Suç ve Ceza",</br>
 "release": "1894-03-28",</br>
-"bookCategory": "POLISIYE",</br>
+"bookCategory": "DETECTIVE",</br>
 "authors": {</br>
 "name": "Fyodor Dostoyevski",</br>
 "surname": "Dostoyevski",</br>
@@ -135,7 +135,17 @@ roles: (ADMIN|USER) is required
 }
 }
 
-### User
+### Member
+
+>{
+"name": "Admin",</br>
+"surname": "admin",</br>
+"phone":"+905423351265",</br>
+"email":"admin@gmail.com",</br>
+"password":"Admin1453*",</br>
+"roles":"ADMIN"</br>
+}
+
 >{
 "name": "Ali",</br>
 "surname": "Çınar",</br>
@@ -144,6 +154,7 @@ roles: (ADMIN|USER) is required
 "password":"Ali1453*",</br>
 "roles":"USER"</br>
 }
+
 </br></br></br>
 
 
