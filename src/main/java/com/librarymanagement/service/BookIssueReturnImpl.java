@@ -27,14 +27,6 @@ public class BookIssueReturnImpl implements BookIssueReturn {
     private BooksRepository bookRepository;
 
 
-    /*
-     * This Method issue the book for library if book present in the library and return dueDate of Book
-     * Assume due date 10 after the issue date of book
-     * This Method generate exception if User not exist with their userID
-     * This Method generate exception if book not available in library with Book Name
-     * This Methode generate exception if book already issued
-     * This Method generate exception id number of books per user is more than 5.
-     */
 
     @Override
     public LocalDate issueBook(UUID userId, UUID bookId) {
@@ -50,7 +42,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
         if(booklist.size()<=5) {
             Books book = bookRepository.findById(bookId).get();
 
-            if(book.isIssued()==true) {
+            if(book.isIssued()) {
                 throw new BookException("Book already issue please issue other book");
             }
 
@@ -71,18 +63,12 @@ public class BookIssueReturnImpl implements BookIssueReturn {
     }
 
 
-    /*
-     * This Method Return the book of User if User return book after due date this method generate fine
-     * This Method generate fine according to number of days more than the due date of book
-     * This Method generate exception if User not exist with their userID
-     * This Method generate exception if book not available in library with Book Id not present in User Account
-     */
 
     @Override
     public Integer returnBook(UUID userId, UUID bookId) {
 
-        Integer fineAmount = 0; // gecikme ücreti
-        Integer fine = 10;
+        int fineAmount = 0; // gecikme ücreti
+        int fine = 10;
 
         userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
         bookRepository.findById(bookId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
@@ -103,7 +89,7 @@ public class BookIssueReturnImpl implements BookIssueReturn {
                 LocalDate todayDate = LocalDate.now();
                 LocalDate returnDate = bookReturn.getBookReturnDate();
                 Period period = Period.between(returnDate, todayDate);
-                Integer days = period.getDays();
+                int days = period.getDays();
                 if(days>0) {
                     fineAmount = period.getDays()*fine;
                 }

@@ -23,17 +23,7 @@ import java.util.UUID;
 @Tag(name = "Users-Controller", description = "Controller managing operations related to users")
 public class MemberController {
     @Autowired
-    private MemberRepository ourUserRepo;
-    @Autowired
     private MemberService memberService;
-    @Autowired
-    private BooksRepository booksRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private SwaggerAnnotations swaggerAnnotations;
-
-
 
 
     @Operation(

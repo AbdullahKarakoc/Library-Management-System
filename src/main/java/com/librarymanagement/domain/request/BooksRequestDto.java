@@ -16,7 +16,7 @@ import java.util.Date;
 public class BooksRequestDto {
 
     @NotBlank(message = "book name is required")
-    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Book's name must be only character") // sadece harf olabilir, sayı ve özel karakter olamaz
+    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Book's name must be only character")
     @Size(min = 1, max = 50, message = "Book's name length must be between 1 and 50 characters")
     private String name;
 
@@ -26,7 +26,6 @@ public class BooksRequestDto {
     private Date release;
 
 
-    //@NotNull(message = "book bookCategory is required")
     //@ValidCategory(message = "BookCategory is not valid")
     private BookCategory bookCategory;
 

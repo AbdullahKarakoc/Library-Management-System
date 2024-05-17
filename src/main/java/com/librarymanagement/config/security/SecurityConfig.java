@@ -24,9 +24,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        List<MemberRole> postRoles = [];
-//        List<MemberRole> updateRoles = [];
-//        List<MemberRole> readRoles = [];
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/books/","/swagger-ui/index.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/books").hasAnyAuthority("ADMIN")

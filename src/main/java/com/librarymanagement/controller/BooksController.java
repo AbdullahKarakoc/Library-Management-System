@@ -25,9 +25,6 @@ public class BooksController {
     @Autowired
     private BooksService service;
     @Autowired
-    private SwaggerAnnotations swaggerAnnotations;
-
-    @Autowired
     BookIssueReturnImpl bookIssueReturnImpl;
 
 
@@ -77,7 +74,6 @@ public class BooksController {
         return ResponseEntity.ok(book);
     }
 
-// queryDSL - SearchFilter research
     @Operation(
             summary = "Searches for a book by name",
             description = "Searches for a specific book by its name.",

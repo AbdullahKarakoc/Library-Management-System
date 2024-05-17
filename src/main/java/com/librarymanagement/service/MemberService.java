@@ -30,12 +30,13 @@ import java.util.stream.Collectors;
 @Data
 public class MemberService {
 
-    private final MemberRepository memberRepository;
-    private final ModelMapper modelMapper;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private final static Logger logger = LoggerFactory.getLogger(MemberService.class);
-
+    
 
     public MemberRequestDto saveUser(MemberRequestDto userDto){
         if (memberRepository.existsByEmail(userDto.getEmail())) {
@@ -54,15 +55,13 @@ public class MemberService {
 
     public List<MemberResponseDto> getUsers() {
         List<Members> users = memberRepository.findAll();
-        List<MemberResponseDto> dtos = users.stream().map(MemberModel -> modelMapper.map(MemberModel, MemberResponseDto.class)).collect(Collectors.toList());
-        return dtos;
+        return users.stream().map(MemberModel -> modelMapper.map(MemberModel, MemberResponseDto.class)).collect(Collectors.toList());
     }
 
 
     public MemberResponseDto getUser() {
         Optional<Members> user = memberRepository.findByEmail(getLoggedInUserDetails().getUsername());
-        MemberResponseDto dto = modelMapper.map(user, MemberResponseDto.class);
-        return dto;
+        return modelMapper.map(user, MemberResponseDto.class);
     }
 
     public UserDetails getLoggedInUserDetails() {
@@ -78,9 +77,9 @@ public class MemberService {
     public MemberRequestDto updateUser(UUID userId, MemberRequestDto updatedUserDto) {
         Members existingUser = memberRepository.findById(userId).orElseThrow(() -> new DataNotFoundException(ErrorMessages.MEMBER_NOT_FOUND.getValue()));
 
-        if (memberRepository.existsByEmail(updatedUserDto.getEmail())) {
-            throw new UserAlreadyExistsException("Email already exists. Please choose a different email address.");
-        }
+//        if (memberRepository.existsByEmail(updatedUserDto.getEmail())) {
+//            throw new UserAlreadyExistsException("Email already exists. Please choose a different email address.");
+//        }
 
         existingUser.setName(updatedUserDto.getName());
         existingUser.setSurname(updatedUserDto.getSurname());

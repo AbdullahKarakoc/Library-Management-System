@@ -12,12 +12,12 @@ import java.util.Date;
 public class AuthorsRequestDto {
 
     @NotBlank(message = "authors name is required")
-    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Author's name must be only characters") // sadece harf olabilir, sayı ve özel karakter olamaz
+    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Author's name must be only characters")
     @Size(min = 5, max = 30, message = "Author's name length must be between 5 and 20 characters")
     private String name;
 
     @NotBlank(message = "authors name is required")
-    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Author's surname must be only characters") // sadece harf olabilir, sayı ve özel karakter olamaz
+    @Pattern(regexp = "^[a-zA-ZğüşıöçĞÜŞİÖÇ\\s]+$",message = "Author's surname must be only characters")
     @Size(min = 5, max = 30, message = "Author's surname length must be between 5 and 20 characters")
     private String surname;
 

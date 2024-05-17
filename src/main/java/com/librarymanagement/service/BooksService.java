@@ -18,6 +18,7 @@ import com.librarymanagement.util.ErrorMessages;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,13 +30,14 @@ import java.util.UUID;
 @Data
 public class BooksService {
 
-
-    private final BooksRepository bookRepository;
-    private final ModelMapper modelMapper;
-    private final AuthorRepository authorRepository;
-    private final PublisherRepository publisherRepository;
-
-
+    @Autowired
+    private BooksRepository bookRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private AuthorRepository authorRepository;
+    @Autowired
+    private PublisherRepository publisherRepository;
 
 
     public void saveBook(BooksRequestDto bookDto) {
@@ -76,9 +78,8 @@ public class BooksService {
 
 
     public BooksResponseDto updateBook(UUID id, BooksRequestDto booksDto) {
-        Books optionalBooks = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
-            Books existingBook = optionalBooks;
+        Books existingBook = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
             existingBook.setName(booksDto.getName());
             existingBook.setRelease(booksDto.getRelease());
             existingBook.setBookCategory(booksDto.getBookCategory());
@@ -98,7 +99,6 @@ public class BooksService {
     public String deleteBook(UUID id) {
 
         Books book = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
-        // Kitabın durumunu kontrol et
         if (book.getBookStatus() == BookStatus.BORROWED) {
             throw new UnsupportedOperationException("Cannot delete a book that is borrowed.");
         }
