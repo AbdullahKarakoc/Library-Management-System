@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @Tag(name = "Users-Controller", description = "Controller managing operations related to users")
 public class MemberController {
     @Autowired
@@ -34,7 +34,7 @@ public class MemberController {
                     @ApiResponse(responseCode = "404", description = "Error, user not saved")
             }
     )
-    @PostMapping("/users")
+    @PostMapping()
     public ResponseEntity<String> addUser(@Valid @RequestBody MemberRequestDto userDto) {
         MemberRequestDto savedUser = memberService.saveUser(userDto);
         return ResponseEntity.ok("User successfully added");
@@ -45,7 +45,7 @@ public class MemberController {
             summary = "Get all users",
             description = "An endpoint used to list all users."
     )
-    @GetMapping("/users")
+    @GetMapping()
     public ResponseEntity<List<MemberResponseDto>> getAllUsers() {
         List<MemberResponseDto> allUsers = memberService.getUsers();
         return ResponseEntity.ok(allUsers);
@@ -57,7 +57,7 @@ public class MemberController {
             summary = "Get my details",
             description = "An endpoint used to get details of the logged-in user."
     )
-    @GetMapping("/users/me")
+    @GetMapping("/me")
     public ResponseEntity<Object> getMyDetails() {
         MemberResponseDto user = memberService.getUser();
         return ResponseEntity.ok(user);
@@ -70,7 +70,7 @@ public class MemberController {
             summary = "Update user",
             description = "An endpoint used to update an existing user by their ID."
     )
-    @PutMapping("/users/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<String>  updateUser(@PathVariable UUID userId, @Valid @RequestBody MemberRequestDto updatedUserDto) {
         MemberRequestDto updatedUser = memberService.updateUser(userId, updatedUserDto);
         return ResponseEntity.ok("User successfully updated");
@@ -81,7 +81,7 @@ public class MemberController {
             summary = "Delete user",
             description = "An endpoint used to delete an existing user by their ID."
     )
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID userId) {
         memberService.deleteUser(userId);
         return ResponseEntity.ok("User successfully deleted");
