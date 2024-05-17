@@ -36,7 +36,7 @@ public class MemberService {
     private ModelMapper modelMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
 
     public MemberRequestDto saveUser(MemberRequestDto userDto){
         if (memberRepository.existsByEmail(userDto.getEmail())) {
