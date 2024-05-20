@@ -129,7 +129,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "User or book not found")
             }
     )
-    @PutMapping("/issue/{userId}/{bookId}")
+    @PutMapping("/{userId}/issue/{bookId}")
     public ResponseEntity<String> bookIssueControlHandler(
             @PathVariable("userId") UUID userId,
             @PathVariable("bookId") UUID bookId){
@@ -149,7 +149,7 @@ public class BooksController {
                     @ApiResponse(responseCode = "404", description = "User or book not found")
             }
     )
-    @PutMapping("/return/{userId}/{bookId}")
+    @PutMapping("/{userId}/return/{bookId}")
     public ResponseEntity<String> bookReturnControlHandler(
             @PathVariable("userId") UUID userId,
             @PathVariable("bookId") UUID bookId){
