@@ -19,31 +19,31 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
-@Tag(name = "Users-Controller", description = "Controller managing operations related to users")
+@RequestMapping("/api/members")
+@Tag(name = "Members-Controller", description = "Controller managing operations related to members")
 public class MemberController {
     @Autowired
     private MemberService memberService;
 
 
     @Operation(
-            summary = "Save a new user",
-            description = "An endpoint used to save a new user.",
+            summary = "Save a new members",
+            description = "An endpoint used to save a new members.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "User successfully saved"),
-                    @ApiResponse(responseCode = "404", description = "Error, user not saved")
+                    @ApiResponse(responseCode = "200", description = "Member successfully saved"),
+                    @ApiResponse(responseCode = "404", description = "Error, Member not saved")
             }
     )
     @PostMapping()
     public ResponseEntity<String> addUser(@Valid @RequestBody MemberRequestDto userDto) {
         MemberRequestDto savedUser = memberService.saveUser(userDto);
-        return ResponseEntity.ok("User successfully added");
+        return ResponseEntity.ok("Member successfully added");
     }
 
 
     @Operation(
-            summary = "Get all users",
-            description = "An endpoint used to list all users."
+            summary = "Get all members",
+            description = "An endpoint used to list all members."
     )
     @GetMapping()
     public ResponseEntity<List<MemberResponseDto>> getAllUsers() {
@@ -55,7 +55,7 @@ public class MemberController {
 
     @Operation(
             summary = "Get my details",
-            description = "An endpoint used to get details of the logged-in user."
+            description = "An endpoint used to get details of the logged-in member."
     )
     @GetMapping("/me")
     public ResponseEntity<Object> getMyDetails() {
@@ -67,24 +67,24 @@ public class MemberController {
 
 
     @Operation(
-            summary = "Update user",
-            description = "An endpoint used to update an existing user by their ID."
+            summary = "Update member",
+            description = "An endpoint used to update an existing member by their ID."
     )
     @PutMapping("/{userId}")
     public ResponseEntity<String>  updateUser(@PathVariable UUID userId, @Valid @RequestBody MemberRequestDto updatedUserDto) {
         MemberRequestDto updatedUser = memberService.updateUser(userId, updatedUserDto);
-        return ResponseEntity.ok("User successfully updated");
+        return ResponseEntity.ok("Member successfully updated");
     }
 
 
     @Operation(
-            summary = "Delete user",
-            description = "An endpoint used to delete an existing user by their ID."
+            summary = "Delete member",
+            description = "An endpoint used to delete an existing member by their ID."
     )
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID userId) {
         memberService.deleteUser(userId);
-        return ResponseEntity.ok("User successfully deleted");
+        return ResponseEntity.ok("Member successfully deleted");
     }
 
 
