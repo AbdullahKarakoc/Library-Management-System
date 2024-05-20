@@ -41,8 +41,11 @@ public class BooksService {
 
 
     public void saveBook(BooksRequestDto bookDto) {
-        Authors author = authorRepository.save(modelMapper.map(bookDto.getAuthors(), Authors.class));
-        Publishers publisher = publisherRepository.save(modelMapper.map(bookDto.getPublishers(), Publishers.class));
+        Authors author = authorRepository.findById(bookDto.getAuthorId())
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND.getValue()));
+
+        Publishers publisher = publisherRepository.findById(bookDto.getPublisherId())
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.PUBLISHER_NOT_FOUND.getValue()));
 
         Books book = modelMapper.map(bookDto, Books.class);
         book.setAuthors(author);

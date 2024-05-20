@@ -11,6 +11,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class BooksRequestDto {
@@ -20,6 +21,7 @@ public class BooksRequestDto {
     @Size(min = 1, max = 50, message = "Book's name length must be between 1 and 50 characters")
     private String name;
 
+    @NotNull(message = "author's birthdate is required")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Past(message = "Birthdate must be in the past")
@@ -27,13 +29,13 @@ public class BooksRequestDto {
 
 
     //@ValidCategory(message = "BookCategory is not valid")
+    @NotNull(message = "book category is required")
     private BookCategory bookCategory;
 
+    @NotNull(message = "Author ID is required")
+    private UUID authorId;
 
-    @Valid
-    private  AuthorsRequestDto authors;
-    @Valid
-    private  PublishersRequestDto publishers;
-
+    @NotNull(message = "Publisher ID is required")
+    private UUID publisherId;
     
 }

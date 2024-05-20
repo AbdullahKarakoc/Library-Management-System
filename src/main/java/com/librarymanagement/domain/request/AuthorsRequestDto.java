@@ -22,6 +22,7 @@ public class AuthorsRequestDto {
     private String surname;
 
 
+    @NotNull(message = "author's birthdate is required")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Past(message = "Birthdate must be in the past")
