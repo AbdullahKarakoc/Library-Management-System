@@ -82,22 +82,24 @@ public class BooksService {
 
     public BooksResponseDto updateBook(UUID id, BooksRequestDto booksDto) {
 
-        Books existingBook = bookRepository.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
-            existingBook.setName(booksDto.getName());
-            existingBook.setRelease(booksDto.getRelease());
-            existingBook.setBookCategory(booksDto.getBookCategory());
+        Books existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.BOOK_NOT_FOUND.getValue()));
 
-            Authors author = authorRepository.save(modelMapper.map(booksDto.getAuthors(), Authors.class));
-            existingBook.setAuthors(author);
+        existingBook.setName(booksDto.getName());
+        existingBook.setRelease(booksDto.getRelease());
+        existingBook.setBookCategory(booksDto.getBookCategory());
 
-            Publishers publisher = publisherRepository.save(modelMapper.map(booksDto.getPublishers(), Publishers.class));
-            existingBook.setPublishers(publisher);
+        Authors author = authorRepository.findById(booksDto.getAuthorId())
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.AUTHOR_NOT_FOUND.getValue()));
+        existingBook.setAuthors(author);
 
-            Books updatedBook = bookRepository.save(existingBook);
-            return modelMapper.map(updatedBook, BooksResponseDto.class);
+        Publishers publisher = publisherRepository.findById(booksDto.getPublisherId())
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.PUBLISHER_NOT_FOUND.getValue()));
+        existingBook.setPublishers(publisher);
 
-        }
-
+        Books updatedBook = bookRepository.save(existingBook);
+        return modelMapper.map(updatedBook, BooksResponseDto.class);
+    }
 
     public String deleteBook(UUID id) {
 
