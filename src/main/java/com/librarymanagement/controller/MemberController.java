@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/members")
+@RequestMapping("/api/V1/members")
 @Tag(name = "Members-Controller", description = "Controller managing operations related to members")
 public class MemberController {
     @Autowired

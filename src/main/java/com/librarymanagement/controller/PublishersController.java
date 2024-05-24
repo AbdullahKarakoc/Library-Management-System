@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/publishers")
+@RequestMapping("/api/V1/publishers")
 @Tag(name = "Publishers-Controller", description = "Controller managing operations related to publishers")
 public class PublishersController {
     @Autowired

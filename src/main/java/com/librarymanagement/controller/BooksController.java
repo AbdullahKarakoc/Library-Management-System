@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/books")
+@RequestMapping("/api/V1/books")
 @RestController
 @Tag(name = "Books-Controller", description = "Controller managing operations related to books")
 public class BooksController {
